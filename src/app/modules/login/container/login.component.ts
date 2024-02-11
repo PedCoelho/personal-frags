@@ -6,7 +6,7 @@ import {
   Output,
   type OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +18,9 @@ export class LoginComponent implements OnInit {
   @Input() error: string | null = null;
   @Output() submitEM = new EventEmitter();
 
-  public form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+  public form: UntypedFormGroup = new UntypedFormGroup({
+    username: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   });
 
   public ngOnInit() {}
