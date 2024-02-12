@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://vepe-finances.herokuapp.com',
+  apiBaseUrl: 'https://localhost:8000',
   firebaseConfig: {},
 };

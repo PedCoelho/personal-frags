@@ -3,6 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginArgs } from 'app/modules/login/models/login.models';
 import { HttpService } from 'app/modules/shared/services/http.service';
 import { Observable } from 'rxjs';
+import { environment } from './../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
 
   //todo type  response
   public authenticate(params: LoginArgs): Observable<any> {
-    return this.http.post('', {
+    return this.http.post(`${environment.apiBaseUrl}`, {
       password: params.password,
       username: params.user,
     });
