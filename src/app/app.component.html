@@ -1,2 +1,8 @@
+<mat-toolbar >
+    <span>{{title}}</span>
+    <span class="fill-space"></span>
+    <span *ngIf="user$ | async">Olá, {{(user$ | async)?.displayName}}</span>
+    <button (click)="signOut()" mat-button>Sair</button>
+    </mat-toolbar>
 <router-outlet>
 </router-outlet>
