@@ -1,7 +1,13 @@
-<mat-toolbar >
+<mat-toolbar class="p-y-3" color="accent" >
     <span>{{title}}</span>
+    <div *ngIf="user$ | async" class="flex align-items-center m-r-3 h-100">
+        <span class="vertical-separator--white m-x-3"></span>
+        <div class="flex round-img m-r-3">
+            <img [src]="(user$|async)?.photoURL"/>
+        </div>
+        <span>Olá, {{(user$ | async)?.displayName}}</span>
+    </div>
     <span class="fill-space"></span>
-    <span *ngIf="user$ | async">Olá, {{(user$ | async)?.displayName}}</span>
     <button (click)="signOut()" mat-button>Sair</button>
     </mat-toolbar>
 <router-outlet>

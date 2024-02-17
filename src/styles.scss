@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("variables.scss");
-@import "~firebaseui/dist/firebaseui.css";
+@import url("utilities.scss");
 
 html,
 body {
@@ -13,4 +13,17 @@ body {
 
 .fill-space {
   flex: 1 1 auto;
+}
+
+.vertical-separator {
+  height: 100%;
+  width: 1.5px;
+  &--black {
+    @extend .vertical-separator;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  &--white {
+    @extend .vertical-separator;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 }
