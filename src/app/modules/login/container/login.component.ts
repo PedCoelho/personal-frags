@@ -1,10 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
-  Output,
   type OnInit,
 } from '@angular/core';
 import {
@@ -14,7 +11,6 @@ import {
   signInWithPopup,
   user,
 } from '@angular/fire/auth';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
@@ -23,21 +19,14 @@ import { Observable, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  @Input() error: string | null = null;
-  @Output() submitEM = new EventEmitter();
-
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    username: new UntypedFormControl(''),
-    password: new UntypedFormControl(''),
-  });
-
   public user$: Observable<User | null>;
   public userSubscription: Subscription;
+  public imageSrc =
+    'https://neurosciencenews.com/files/2023/11/covid-smell-loss-treatment-neurosince.jpg';
 
   constructor(private auth: Auth) {
     this.user$ = user(this.auth as any);
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
-      //handle user state changes here. Note, that user will be null if there is no currently logged in user.
       console.log(aUser);
     });
   }
@@ -50,16 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit() {}
 
   public submit() {
-    if (this.form.valid) {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(this.auth, provider);
-    }
-  }
-
-  public successCallback(evt: any) {
-    console.log(evt);
-  }
-  public errorCallback(evt: any) {
-    console.log(evt);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.auth, provider);
   }
 }

@@ -8,7 +8,7 @@
         <span>Olá, {{(user$ | async)?.displayName}}</span>
     </div>
     <span class="fill-space"></span>
-    <button (click)="signOut()" mat-button>Sair</button>
+    <button *ngIf="user$ | async" (click)="signOut()" mat-button>Sair</button>
     </mat-toolbar>
 <router-outlet>
 </router-outlet>

@@ -2,6 +2,11 @@
   display: flex;
   justify-content: center;
   padding: calc(var(--spacing-lg) * 2) 0px;
+  text-align: center;
+
+  mat-card {
+    max-width: 350px;
+  }
 }
 
 .mat-form-field {
