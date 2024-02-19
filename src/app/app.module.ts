@@ -9,20 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './modules';
 
-// const firebaseUiAuthConfig: firebaseui.auth.Config = {
-//   signInFlow: 'popup',
-//   signInOptions: [
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     {
-//       requireDisplayName: false,
-//       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-//     },
-//   ],
-//   tosUrl: 'https://no-tos.com',
-//   privacyPolicyUrl: 'https://no-tos.com',
-//   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
-// };
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -33,12 +19,6 @@ import { MaterialModule } from './modules';
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-  ],
-  providers: [
-    // {
-    //   provide: USE_EMULATOR,
-    //   useValue: !environment.production ? ['localhost', 9099] : undefined,
-    // },
   ],
   bootstrap: [AppComponent],
 })

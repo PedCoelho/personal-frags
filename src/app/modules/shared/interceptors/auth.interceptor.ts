@@ -6,7 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from 'app/modules/login/services/auth.service';
+import { AuthService } from 'app/modules/shared/services/auth.service';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
