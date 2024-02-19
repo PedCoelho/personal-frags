@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Auth, User, user } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { AuthService } from './modules/login/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +8,10 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   public title = 'personal-frags';
-  public user$: Observable<User | null>;
 
-  constructor(private auth: Auth) {
-    this.user$ = user(auth as any);
-  }
+  constructor(public authService: AuthService) {}
 
   public signOut() {
-    this.auth.signOut();
+    this.authService.signOut();
   }
 }

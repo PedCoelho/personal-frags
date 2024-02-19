@@ -4,10 +4,9 @@ import { AuthService } from 'app/modules/login/services/auth.service';
 
 export const authGuard: CanActivateFn = (): boolean => {
   const authService = inject(AuthService);
-  //   const authFacade = inject(AuthFacade);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
+  if (authService.isLoggedIn) {
     return true;
   }
 

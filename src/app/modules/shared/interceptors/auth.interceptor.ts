@@ -6,23 +6,23 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from 'app/modules/login/services/auth.service';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
-  private readonly STORAGE_KEY = 'token';
-  private readonly STORAGE_PREFIX = 'personal-frags';
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.getToken();
+    const token = this.authService.getTokenOnStorage();
 
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.getToken()}`,
+          Authorization: `Bearer ${token}`,
         },
       });
     }
@@ -33,22 +33,12 @@ export class AuthInterceptor implements HttpInterceptor {
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401 || err.status === 403) {
-              this.clearToken();
+              this.authService.clearToken();
               return err;
             }
           }
         }
       )
-    );
-  }
-
-  private getToken() {
-    return localStorage.getItem(`${this.STORAGE_PREFIX}.${this.STORAGE_KEY}`);
-  }
-
-  private clearToken() {
-    return localStorage.removeItem(
-      `${this.STORAGE_PREFIX}.${this.STORAGE_KEY}`
     );
   }
 }

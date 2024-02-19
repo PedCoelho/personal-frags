@@ -1,25 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  Auth,
+  GoogleAuthProvider,
+  User,
+  signInWithPopup,
+  user,
+} from '@angular/fire/auth';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LoginArgs } from 'app/modules/login/models/login.models';
-import { HttpService } from 'app/modules/shared/services/http.service';
-import { Observable } from 'rxjs';
-import { environment } from './../../../../environments/environment';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
-  public storageTokenPrefix: string = 'personal-frags';
-  public storageTokenKey: string;
+export class AuthService implements OnDestroy {
+  public storageTokenPrefix: string = 'personal-frags-token';
 
-  constructor(private http: HttpService) {
-    this.storageTokenKey = `${this.storageTokenPrefix}.token`;
+  public user$: Observable<User | null>;
+  public isLoggedIn: boolean = false;
+  public userSubscription: Subscription;
+
+  constructor(public auth: Auth) {
+    this.user$ = user(this.auth as any);
+    this.userSubscription = this.user$.subscribe((aUser: User | null) => {
+      console.log(aUser);
+      this.isLoggedIn = aUser ? true : false;
+
+      //@ts-ignore
+      if (aUser.accessToken) {
+        //@ts-ignore
+        this.setTokenOnStorage(aUser.accessToken);
+      }
+    });
   }
 
-  //todo type  response
-  public authenticate(params: LoginArgs): Observable<any> {
-    return this.http.post(`${environment.apiBaseUrl}`, {
-      password: params.password,
-      username: params.user,
-    });
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
+
+  public signIn(redirectUrl?: string) {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.auth, provider, redirectUrl);
+  }
+
+  public signOut() {
+    this.auth.signOut();
   }
 
   public isAuthenticated(): boolean {
@@ -29,10 +51,14 @@ export class AuthService {
   }
 
   public setTokenOnStorage(token: string): void {
-    localStorage.setItem(this.storageTokenKey, token);
+    localStorage.setItem(this.storageTokenPrefix, token);
   }
 
   public getTokenOnStorage() {
-    return localStorage.getItem(this.storageTokenKey);
+    return localStorage.getItem(this.storageTokenPrefix);
+  }
+
+  public clearToken() {
+    return localStorage.removeItem(this.storageTokenPrefix);
   }
 }
