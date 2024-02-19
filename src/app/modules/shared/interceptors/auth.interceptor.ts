@@ -5,19 +5,21 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AuthService } from 'app/modules/shared/services/auth.service';
+import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
-
+  private auth: AuthService;
+  constructor() {
+    this.auth = inject(AuthService);
+  }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.authService.getTokenOnStorage();
+    const token = this.auth.getTokenOnStorage();
 
     if (token) {
       request = request.clone({
@@ -30,10 +32,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {},
+        //@ts-ignore
         (err: any) => {
+          console.log(err);
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401 || err.status === 403) {
-              this.authService.clearToken();
+              this.auth.clearToken();
               return err;
             }
           }

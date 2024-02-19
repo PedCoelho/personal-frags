@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FirebaseUIModule } from 'firebaseui-angular';
+import { PerfumeSearchModule } from '../shared/components/perfume-search/perfume-search.module';
 import { MaterialModule } from '../shared/material.module';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionComponent } from './container/collection.component';
@@ -10,9 +10,9 @@ import { CollectionComponent } from './container/collection.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule,
     CollectionRoutingModule,
-    FirebaseUIModule,
+    MaterialModule,
+    PerfumeSearchModule,
   ],
   declarations: [CollectionComponent],
   exports: [CollectionComponent],

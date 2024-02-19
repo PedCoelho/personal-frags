@@ -1,0 +1,17 @@
+<form >
+    <mat-form-field  subscriptSizing="dynamic" class="w-100">
+      <mat-label>Busca</mat-label>
+      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes">
+    </mat-form-field>
+
+    <div *ngIf="results.length" class="scrolling-results">
+      <div class="flex w-100" *ngFor="let perfume of results">
+          <img  src="{{perfume.thumbnail}}">
+          <div>
+            <mat-card-title>{{perfume.naslov}}</mat-card-title>
+            <mat-card-subtitle>{{perfume.collection}}</mat-card-subtitle>
+          </div>
+        <mat-card-footer></mat-card-footer>
+      </div>
+    </div>
+  </form>

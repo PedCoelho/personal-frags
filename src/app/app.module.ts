@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -12,6 +13,7 @@ import { MaterialModule } from './modules';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

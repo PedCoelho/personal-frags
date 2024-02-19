@@ -2,6 +2,15 @@
   display: flex;
 }
 
+.flow {
+  &-column {
+    flex-flow: column;
+  }
+  &-row {
+    flex-flow: row;
+  }
+}
+
 .align-items-center {
   align-items: center;
 }
@@ -10,13 +19,8 @@
   justify-content: center;
 }
 
-.flow {
-  &-column {
-    flex-flow: column;
-  }
-  &-row {
-    flex-flow: row;
-  }
+.w-100 {
+  width: 100%;
 }
 
 .h-100 {
