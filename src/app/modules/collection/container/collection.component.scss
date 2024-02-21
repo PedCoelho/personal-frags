@@ -1,17 +1,6 @@
 :host {
   display: flex;
   justify-content: center;
-  padding: calc(var(--spacing-lg) * 2) 0px;
+  align-items: center;
   text-align: center;
-}
-
-.mat-form-field {
-  width: 100%;
-  min-width: 300px;
-}
-
-mat-card-title,
-mat-card-content {
-  display: flex;
-  justify-content: center;
 }

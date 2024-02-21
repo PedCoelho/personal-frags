@@ -1,55 +1,87 @@
-:host {
-  .wrapper {
-    position: relative;
-    width: 300px;
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.scrolling-results {
+  position: absolute;
+  width: 100%;
+  top: 56px;
+  left: 0;
+  box-shadow: (2px 2px 10px rgba(0, 0, 0, 0.4));
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 99;
+  &[disabled="true"] {
+    pointer-events: none;
+    filter: contrast(0.3) brightness(1.4);
+  }
+}
+
+.result {
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(105%) saturate(125%);
   }
 
-  .scrolling-results {
-    position: absolute;
+  &__title {
+    margin-bottom: unset;
+  }
+  &__subtitle {
+    color: grey;
+    margin-bottom: unset;
+  }
+  &__rating-wrapper {
+    img {
+      height: 12px;
+      margin-right: 3px;
+    }
+  }
+}
+
+.collection {
+  &__wrapper {
     width: 100%;
-    top: 56px;
-    left: 0;
-    box-shadow: (2px 2px 10px rgba(0, 0, 0, 0.4));
-    max-height: 300px;
-    overflow-y: auto;
-    &[disabled="true"] {
-      pointer-events: none;
-      filter: contrast(0.3) brightness(1.4);
-    }
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
   }
-
-  .result {
-    background-color: white;
-    text-align: left;
+  &__perfume {
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-    transition: all 0.2s ease-in-out;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    width: fit-content;
+    max-width: 100px;
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm);
+    p {
+      margin-bottom: unset;
+    }
     &:hover {
-      filter: brightness(105%) saturate(125%);
-    }
-
-    &__title {
-      margin-bottom: unset;
-    }
-    &__subtitle {
-      color: grey;
-      margin-bottom: unset;
-    }
-    &__rating-wrapper {
-      img {
-        height: 12px;
-        margin-right: 3px;
+      button {
+        display: block;
       }
     }
   }
-
-  .mat-mdc-mini-fab {
-    box-shadow: unset;
-    z-index: 3;
-    &:focus {
-      box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-        0px 3px 4px 1px rgba(0, 0, 0, 0.14), 0px 3px 6px 2px rgba(0, 0, 0, 0.12);
+  &__image {
+    width: fit-content;
+    position: relative;
+    button {
+      transition: all 0.2s ease;
+      display: none;
+      position: absolute;
+      bottom: 0;
+      right: -10px;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }

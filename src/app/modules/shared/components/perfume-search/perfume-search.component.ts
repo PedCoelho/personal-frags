@@ -124,20 +124,20 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   public closeOnClick(click: MouseEvent) {
     console.log(click);
   }
-  private removeFromCollection(perfume: SearchResult) {
+  public removeFromCollection(perfume: SearchResult | UserPerfume) {
     this.loading = true;
-    perfume.loading = true;
+    (perfume as SearchResult).loading = true;
 
     const sub = this.userService
       .removeFromCollection(perfume.id)
       .pipe(
         finalize(() => {
           this.loading = false;
-          delete perfume.loading;
+          delete (perfume as SearchResult).loading;
         })
       )
       .subscribe(() => {
-        delete perfume.saved;
+        delete (perfume as SearchResult).saved;
         this.notification.success(`Perfume removido com sucesso.`);
         this.getCollection();
       });

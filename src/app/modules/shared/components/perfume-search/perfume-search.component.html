@@ -33,8 +33,15 @@
 
 <h3 class="m-t-4">Coleçâo</h3>
 <div class="collection__wrapper">
-  <div *ngFor="let perfume of collection">
-    <img src="{{ perfume.thumbnail }}" />
-    <p>{{ perfume.name }}</p>
+  <div class="collection__perfume" *ngFor="let perfume of collection">
+    <div class="collection__image">
+      <img src="{{ perfume.thumbnail }}" />
+      <button [class.spinner]="loading" [disabled]="loading" class="m-t-2" mat-mini-fab title="Remover"
+        (click)="removeFromCollection(perfume)">
+        <mat-icon fontIcon="delete" />
+      </button>
+    </div>
+    <p>{{ perfume.name }}
+    </p>
   </div>
 </div>

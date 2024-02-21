@@ -1,2 +1,14 @@
-//todo add default margin-top with the same size as the nav-bar to everything
-//todo add default padding
+:host {
+  .app__wrapper {
+    min-width: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      max-width: var(--main-column-width);
+      padding: calc(var(--spacing-lg) * 2) 0px;
+    }
+  }
+
+  //todo CRITICAL!! improve toolbar responsiveness
+}
