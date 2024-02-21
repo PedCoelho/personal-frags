@@ -10,6 +10,7 @@ import {
   distinctUntilChanged,
   filter,
   finalize,
+  map,
   switchMap,
 } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
@@ -74,6 +75,14 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
           }),
           switchMap((val: string) =>
             this.searchService.query(val).pipe(catchError((e) => EMPTY))
+          ),
+          map((results) =>
+            results.map((perfume: SearchResult) => ({
+              ...perfume,
+              saved: Boolean(
+                this.collection.find((frag) => frag.id === perfume.id)
+              ),
+            }))
           )
         )
         .subscribe((data) => {
@@ -124,6 +133,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   public closeOnClick(click: MouseEvent) {
     console.log(click);
   }
+
   public removeFromCollection(perfume: SearchResult | UserPerfume) {
     this.loading = true;
     (perfume as SearchResult).loading = true;

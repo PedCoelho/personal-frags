@@ -10,20 +10,22 @@
       <img class="m-r-1" src="{{ perfume.thumbnail }}" />
       <div>
         <div class="flex align-items-center">
-          <h4 class="result__title m-r-1">{{ perfume.naslov }}</h4>
-          <small *ngIf="perfume.collection" class="result__subtitle">({{
-            perfume.collection
-            }})</small>
+          <h4 class="result__title m-r-1">{{ perfume.naslov }}
+            <small *ngIf="perfume.collection" class="result__subtitle"> ({{
+              perfume.collection
+              }})</small>
+          </h4>
+
         </div>
         <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: ' + perfume.rating.toFixed(2)">
           <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg" />
           <small class="m-l-1">({{ perfume.num_komentara }})</small>
         </div>
         <button [class.spinner]="perfume.loading" [disabled]="perfume.loading" class="m-t-2"
-          color="{{ perfume.saved ? 'accent' : 'primary' }}" mat-mini-fab
+          color="{{ perfume.saved ? 'primary' : 'accent' }}" mat-mini-fab
           [title]="perfume.saved ? 'Remover' : 'Adicionar'" (click)="addToCollection(perfume)">
           <mat-icon aria-hidden="false" [attr.aria-label]="perfume.saved ? 'Remover' : 'Adicionar'"
-            fontIcon="{{ perfume.saved ? 'favorite' : 'favorite_border' }}">
+            fontIcon="{{ perfume.saved ? 'delete' : 'favorite' }}">
           </mat-icon>
         </button>
       </div>
@@ -36,7 +38,7 @@
   <div class="collection__perfume" *ngFor="let perfume of collection">
     <div class="collection__image">
       <img src="{{ perfume.thumbnail }}" />
-      <button [class.spinner]="loading" [disabled]="loading" class="m-t-2" mat-mini-fab title="Remover"
+      <button [class.spinner]="loading" [disabled]="loading" class="m-t-2" mat-mini-fab title="Remover" color="primary"
         (click)="removeFromCollection(perfume)">
         <mat-icon fontIcon="delete" />
       </button>
