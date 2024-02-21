@@ -46,7 +46,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   //@ts-ignore
   processErrorResponse(response: HttpErrorResponse) {
     console.log(response);
-    let errorResponse = { code: 500, message: response.error };
+    let errorResponse = { code: 500, message: response.message };
 
     // Handle no-json edge cases by status code
     switch (response.status) {

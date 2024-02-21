@@ -27,3 +27,27 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
   }
 }
+
+.mat-mdc-snack-bar-container {
+  &.success {
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-container-color: var(--color-success) !important;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+  &.info {
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-container-color: var(--color-info) !important;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+  &.warn {
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-container-color: var(--color-warn) !important;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+  &.error {
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-container-color: var(--color-error) !important;
+    --mdc-snackbar-supporting-text-color: white;
+    --mat-snack-bar-button-color: #ffd58f;
+  }
+}

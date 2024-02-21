@@ -15,19 +15,4 @@ export class PerfumeSearchService {
       `${environment.apiBaseUrl}/frag/${val}`
     );
   }
-
-  //todo type return
-  public addToCollection(perfume: SearchResult): Observable<any> {
-    const payload = {
-      name: perfume.naslov,
-      id: perfume.id,
-      url: perfume.url.PT[0],
-      thumbnail: perfume.thumbnail,
-      //todo maybe add collection and other relevant props not scraped
-    };
-    return this.http.post(
-      `${environment.apiBaseUrl}/frag/perfume/save`,
-      payload
-    );
-  }
 }

@@ -4,6 +4,11 @@
   --spacing-sm: 0.5rem;
   --spacing-xs: 0.25rem;
 
+  --color-success: rgb(64, 158, 114);
+  --color-info: rgb(63, 123, 176);
+  --color-warn: rgb(255, 253, 116);
+  --color-error: rgb(224, 111, 111);
+
   .m {
     &-0 {
       margin: unset;

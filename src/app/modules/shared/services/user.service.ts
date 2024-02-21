@@ -25,9 +25,15 @@ export class UserService {
       thumbnail: perfume.thumbnail,
       //todo maybe add collection and other relevant props not scraped
     };
-    return this.http.post(`${environment.apiBaseUrl}/frag/perfume`, payload);
+    return this.http.post(
+      `${environment.apiBaseUrl}/frag/perfume/save`,
+      payload
+    );
   }
+
   public removeFromCollection(id: string): Observable<any> {
-    return this.http.delete(`${environment.apiBaseUrl}/frag/perfume/${id}`);
+    return this.http.delete(
+      `${environment.apiBaseUrl}/frag/perfume/delete/${id}`
+    );
   }
 }

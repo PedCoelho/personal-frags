@@ -13,30 +13,39 @@ export class NotificationService {
 
   info(notification: string) {
     this.notify({
-      message: `Info: ${notification}`,
-      type: { ...this.defaultConfig },
+      message: `${notification}`,
+      type: { ...this.defaultConfig, panelClass: 'info' },
     });
   }
   success(notification: string) {
     this.notify({
-      message: `Sucesso: ${notification}`,
-      type: { ...this.defaultConfig },
+      message: `${notification}`,
+      type: { ...this.defaultConfig, panelClass: 'success' },
     });
   }
   warning(notification: string) {
     this.notify({
-      message: `Aviso: ${notification}`,
-      type: { ...this.defaultConfig },
+      message: `${notification}`,
+      type: { ...this.defaultConfig, panelClass: 'warn' },
     });
   }
   error(notification: string) {
     this.notify({
-      message: `Erro: ${notification}`,
-      type: { ...this.defaultConfig },
+      message: `${notification}`,
+      type: { ...this.defaultConfig, panelClass: 'error', duration: 0 },
+      action: 'Fechar',
     });
   }
 
-  private notify(notification: { message: string; type: MatSnackBarConfig }) {
-    this.notification.open(notification.message, undefined, notification.type);
+  private notify(notification: {
+    message: string;
+    type: MatSnackBarConfig;
+    action?: string;
+  }) {
+    this.notification.open(
+      notification.message,
+      notification.action,
+      notification.type
+    );
   }
 }

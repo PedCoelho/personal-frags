@@ -1,37 +1,40 @@
 <div class="wrapper">
-  <mat-form-field subscriptSizing="dynamic" class="w-100" (focusout)="showResults = false"
-    (focusin)="showResults = true">
+  <mat-form-field subscriptSizing="dynamic" class="w-100">
     <mat-label>Busca</mat-label>
     <div class="flex align-items-center">
-      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes">
-    </div>
-    <div *ngIf="loading || (results.length && showResults)" class="scrolling-results" [attr.disabled]="loading">
-      <div class="result flex p-2" *ngFor="let perfume of results">
-        <img class="m-r-1" src="{{perfume.thumbnail}}">
-        <div>
-          <h4 class="result__title">{{perfume.naslov}}</h4>
-          <small *ngIf="perfume.collection" class="result__subtitle">{{perfume.collection}}</small>
-          <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: '+ perfume.rating.toFixed(2)">
-            <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg">
-            <small class="m-l-1">({{perfume.num_komentara}})</small>
-          </div>
-          <button [class.spinner]="perfume.loading" [disabled]="perfume.loading" class="m-t-2"
-            color="{{perfume.saved ? 'accent': 'primary'}}" mat-mini-fab
-            [title]="perfume.saved ? 'Remover' :'Adicionar'" (click)="addToCollection(perfume)">
-            <mat-icon aria-hidden="false" [attr.aria-label]="perfume.saved ? 'Remover' :'Adicionar'"
-              fontIcon="{{perfume.saved ? 'favorite': 'favorite_border'}}">
-            </mat-icon>
-          </button>
-        </div>
-      </div>
+      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes" />
     </div>
   </mat-form-field>
+  <div *ngIf="loading || (results.length && showResults)" class="scrolling-results" [attr.disabled]="loading">
+    <div class="result flex p-2" *ngFor="let perfume of results">
+      <img class="m-r-1" src="{{ perfume.thumbnail }}" />
+      <div>
+        <div class="flex align-items-center">
+          <h4 class="result__title m-r-1">{{ perfume.naslov }}</h4>
+          <small *ngIf="perfume.collection" class="result__subtitle">({{
+            perfume.collection
+            }})</small>
+        </div>
+        <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: ' + perfume.rating.toFixed(2)">
+          <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg" />
+          <small class="m-l-1">({{ perfume.num_komentara }})</small>
+        </div>
+        <button [class.spinner]="perfume.loading" [disabled]="perfume.loading" class="m-t-2"
+          color="{{ perfume.saved ? 'accent' : 'primary' }}" mat-mini-fab
+          [title]="perfume.saved ? 'Remover' : 'Adicionar'" (click)="addToCollection(perfume)">
+          <mat-icon aria-hidden="false" [attr.aria-label]="perfume.saved ? 'Remover' : 'Adicionar'"
+            fontIcon="{{ perfume.saved ? 'favorite' : 'favorite_border' }}">
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <h3 class="m-t-4">Coleçâo</h3>
 <div class="collection__wrapper">
   <div *ngFor="let perfume of collection">
-    <img src="{{perfume.thumbnail}}">
-    <p>{{perfume.name}}</p>
+    <img src="{{ perfume.thumbnail }}" />
+    <p>{{ perfume.name }}</p>
   </div>
 </div>

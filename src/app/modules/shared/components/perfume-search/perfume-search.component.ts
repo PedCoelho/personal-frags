@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserPerfume } from 'app/modules/collection/models/collection.models';
 import { UserService } from 'app/modules/shared/services/user.service';
@@ -22,6 +22,18 @@ import { SearchResult } from './models/perfume-search.models';
   styleUrls: ['./perfume-search.component.scss'],
 })
 export class PerfumeSearchComponent implements OnInit, OnDestroy {
+  @HostListener('click', ['$event'])
+  handleClick(e: PointerEvent) {
+    this.showResults = true;
+    e.stopPropagation();
+  }
+
+  @HostListener('document:click')
+  clickOutside(): false | void {
+    if (this.loading) return false;
+    this.showResults = false;
+  }
+
   public searchBar: FormControl = new FormControl(['']);
   public results: SearchResult[] = [];
   public collection: UserPerfume[] = [];
@@ -37,36 +49,40 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subs.push(this.getCollection());
-    this.subs.push(this.setupSearchListener());
+    this.getCollection();
+    this.setupSearchListener();
   }
 
   //todo separate into own component
-  private getCollection(): Subscription {
-    return this.userService
-      .getCollection()
-      .subscribe((data) => (this.collection = data));
+  private getCollection(): void {
+    this.subs.push(
+      this.userService
+        .getCollection()
+        .subscribe((data) => (this.collection = data))
+    );
   }
 
-  private setupSearchListener(): Subscription {
-    return this.searchBar.valueChanges
-      .pipe(
-        distinctUntilChanged(),
-        debounceTime(200),
-        filter((v) => {
-          if (!v) this.results = [];
-          return v;
-        }),
-        switchMap((val: string) =>
-          this.searchService.query(val).pipe(catchError((e) => EMPTY))
+  private setupSearchListener(): void {
+    this.subs.push(
+      this.searchBar.valueChanges
+        .pipe(
+          distinctUntilChanged(),
+          debounceTime(200),
+          filter((v) => {
+            if (!v) this.results = [];
+            return v;
+          }),
+          switchMap((val: string) =>
+            this.searchService.query(val).pipe(catchError((e) => EMPTY))
+          )
         )
-      )
-      .subscribe((data) => {
-        console.log(data);
-        //todo have a function that checks and assigns perfume.saved
-        //todo for perfume ID's in user's collection
-        this.results = data ? data : [];
-      });
+        .subscribe((data) => {
+          console.log(data);
+          //todo have a function that checks and assigns perfume.saved
+          //todo for perfume ID's in user's collection
+          this.results = data ? data : [];
+        })
+    );
   }
 
   public ngOnDestroy(): void {
@@ -87,7 +103,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
       `Salvando perfume ${perfume.naslov} na sua coleção.`
     );
 
-    const sub = this.searchService
+    const sub = this.userService
       .addToCollection(perfume)
       .pipe(
         finalize(() => {
@@ -99,19 +115,32 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
         perfume.saved = true;
         console.log(data);
         this.notification.success(`Perfume salvo com sucesso.`);
+        this.getCollection();
       });
 
     this.subs.push(sub);
   }
 
+  public closeOnClick(click: MouseEvent) {
+    console.log(click);
+  }
   private removeFromCollection(perfume: SearchResult) {
     this.loading = true;
     perfume.loading = true;
 
-    this.notification.info(
-      `Removendo perfume ${perfume.naslov} da sua coleção.`
-    );
-    delete perfume.saved;
-    throw new Error('Method not implemented.');
+    const sub = this.userService
+      .removeFromCollection(perfume.id)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          delete perfume.loading;
+        })
+      )
+      .subscribe(() => {
+        delete perfume.saved;
+        this.notification.success(`Perfume removido com sucesso.`);
+        this.getCollection();
+      });
+    this.subs.push(sub);
   }
 }
