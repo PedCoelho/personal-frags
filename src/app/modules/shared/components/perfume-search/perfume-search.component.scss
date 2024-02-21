@@ -64,9 +64,11 @@
     p {
       margin-bottom: unset;
     }
-    &:hover {
+    &:hover,
+    &:focus-visible {
       button {
         display: block;
+        opacity: 0.3;
       }
     }
   }
@@ -78,8 +80,10 @@
       display: none;
       position: absolute;
       bottom: 0;
-      right: -10px;
-      &:hover {
+      right: -12px;
+      &:hover,
+      :focus {
+        display: block;
         opacity: 1;
       }
     }
