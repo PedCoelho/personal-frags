@@ -1,4 +1,5 @@
-export type LoginArgs = {
-  user: string;
-  password: string;
-};
+export interface UserPerfume {
+  name: string;
+  thumbnail: string;
+  id: string;
+}

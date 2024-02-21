@@ -45,35 +45,29 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   //@ts-ignore
   processErrorResponse(response: HttpErrorResponse) {
-    let errorResponse;
+    console.log(response);
+    let errorResponse = { code: 500, message: response.error };
 
     // Handle no-json edge cases by status code
-    if (response.headers.get('content-type') !== 'application/json') {
-      switch (response.status) {
-        case 500:
-          errorResponse = {
-            code: 500,
-            message: 'Erro interno do servidor',
-          };
-          break;
-      }
-    }
-
-    if (response.status !== 0 && response.error) {
-      errorResponse = null;
+    switch (response.status) {
+      case 500:
+        errorResponse = {
+          code: 500,
+          message: 'Erro interno do servidor',
+        };
+        break;
     }
 
     if (this.expectingBlob) {
       return this.handleBlobErrorResponse(response);
     }
 
-    if (!errorResponse) {
-      errorResponse = {
-        code: 0,
-        message: `Servidor não está respondendo.`,
-        detailedMessage: response.message,
-      };
-    }
+    // if (!errorResponse) {
+    //   errorResponse = {
+    //     code: 0,
+    //     message: `Servidor não está respondendo.`,
+    //   };
+    // }
 
     // dont show notification when request header has NoError parameter on it.
     if (errorResponse && errorResponse.message) {

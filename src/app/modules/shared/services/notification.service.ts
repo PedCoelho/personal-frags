@@ -13,25 +13,25 @@ export class NotificationService {
 
   info(notification: string) {
     this.notify({
-      message: notification,
+      message: `Info: ${notification}`,
       type: { ...this.defaultConfig },
     });
   }
   success(notification: string) {
     this.notify({
-      message: notification,
+      message: `Sucesso: ${notification}`,
       type: { ...this.defaultConfig },
     });
   }
   warning(notification: string) {
     this.notify({
-      message: notification,
+      message: `Aviso: ${notification}`,
       type: { ...this.defaultConfig },
     });
   }
   error(notification: string) {
     this.notify({
-      message: notification,
+      message: `Erro: ${notification}`,
       type: { ...this.defaultConfig },
     });
   }

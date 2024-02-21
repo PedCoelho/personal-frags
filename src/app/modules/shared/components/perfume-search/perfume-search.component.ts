@@ -1,5 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { UserPerfume } from 'app/modules/collection/models/collection.models';
+import { UserService } from 'app/modules/shared/services/user.service';
 import {
   EMPTY,
   Subscription,
@@ -19,9 +21,10 @@ import { SearchResult } from './models/perfume-search.models';
   templateUrl: './perfume-search.component.html',
   styleUrls: ['./perfume-search.component.scss'],
 })
-export class PerfumeSearchComponent implements OnDestroy {
+export class PerfumeSearchComponent implements OnInit, OnDestroy {
   public searchBar: FormControl = new FormControl(['']);
   public results: SearchResult[] = [];
+  public collection: UserPerfume[] = [];
   public showResults = false;
   public loading = false;
 
@@ -29,9 +32,24 @@ export class PerfumeSearchComponent implements OnDestroy {
 
   constructor(
     private searchService: PerfumeSearchService,
+    private userService: UserService,
     private notification: NotificationService
-  ) {
-    const searchSub = this.searchBar.valueChanges
+  ) {}
+
+  public ngOnInit(): void {
+    this.subs.push(this.getCollection());
+    this.subs.push(this.setupSearchListener());
+  }
+
+  //todo separate into own component
+  private getCollection(): Subscription {
+    return this.userService
+      .getCollection()
+      .subscribe((data) => (this.collection = data));
+  }
+
+  private setupSearchListener(): Subscription {
+    return this.searchBar.valueChanges
       .pipe(
         distinctUntilChanged(),
         debounceTime(200),
@@ -45,11 +63,14 @@ export class PerfumeSearchComponent implements OnDestroy {
       )
       .subscribe((data) => {
         console.log(data);
-        //todo have a function that checks and assigns perfume.saved for perfume ID's in user's collection
+        //todo have a function that checks and assigns perfume.saved
+        //todo for perfume ID's in user's collection
         this.results = data ? data : [];
       });
+  }
 
-    this.subs.push(searchSub);
+  public ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   public arrayFromRating(rating: SearchResult['rating_rounded']) {
@@ -92,9 +113,5 @@ export class PerfumeSearchComponent implements OnDestroy {
     );
     delete perfume.saved;
     throw new Error('Method not implemented.');
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }

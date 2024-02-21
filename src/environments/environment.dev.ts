@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost:8000',
+  apiBaseUrl: 'https://vepe-finances.herokuapp.com' || 'http://localhost:8000',
   firebaseConfig: {
     apiKey: process.env['FIREBASE_API_KEY'],
     authDomain: process.env['FIREBASE_DOMAIN'],
