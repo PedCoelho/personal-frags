@@ -57,9 +57,10 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   //todo separate into own component
   private getCollection(): void {
     this.subs.push(
-      this.userService
-        .getCollection()
-        .subscribe((data) => (this.collection = data))
+      this.userService.getCollection().subscribe((data) => {
+        this.collection = data;
+        this.results = this.syncSavedResults(this.results);
+      })
     );
   }
 
@@ -76,19 +77,10 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
           switchMap((val: string) =>
             this.searchService.query(val).pipe(catchError((e) => EMPTY))
           ),
-          map((results) =>
-            results.map((perfume: SearchResult) => ({
-              ...perfume,
-              saved: Boolean(
-                this.collection.find((frag) => frag.id === perfume.id)
-              ),
-            }))
-          )
+          map((results) => this.syncSavedResults(results))
         )
         .subscribe((data) => {
           console.log(data);
-          //todo have a function that checks and assigns perfume.saved
-          //todo for perfume ID's in user's collection
           this.results = data ? data : [];
         })
     );
@@ -121,7 +113,6 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((data) => {
-        perfume.saved = true;
         console.log(data);
         this.notification.success(`Perfume salvo com sucesso.`);
         this.getCollection();
@@ -147,10 +138,16 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(() => {
-        delete (perfume as SearchResult).saved;
         this.notification.success(`Perfume removido com sucesso.`);
         this.getCollection();
       });
     this.subs.push(sub);
+  }
+
+  private syncSavedResults(results: SearchResult[]) {
+    return results.map((perfume: SearchResult) => ({
+      ...perfume,
+      saved: Boolean(this.collection.find((frag) => frag.id === perfume.id)),
+    }));
   }
 }
