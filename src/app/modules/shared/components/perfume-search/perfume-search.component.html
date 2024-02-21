@@ -1,17 +1,25 @@
-<form >
-    <mat-form-field  subscriptSizing="dynamic" class="w-100">
-      <mat-label>Busca</mat-label>
-      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes">
-    </mat-form-field>
-
-    <div *ngIf="results.length" class="scrolling-results">
-      <div class="flex w-100" *ngFor="let perfume of results">
-          <img  src="{{perfume.thumbnail}}">
-          <div>
-            <mat-card-title>{{perfume.naslov}}</mat-card-title>
-            <mat-card-subtitle>{{perfume.collection}}</mat-card-subtitle>
-          </div>
-        <mat-card-footer></mat-card-footer>
+<div class="wrapper" >
+  <mat-form-field  subscriptSizing="dynamic" class="w-100" (focusout)="showResults = false" (focusin)="showResults = true">
+        <mat-label>Busca</mat-label>
+        <div class="flex align-items-center">
+          <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes">
+        </div>
+      </mat-form-field>
+      <div *ngIf="loading || (results.length && true)" class="scrolling-results" [attr.disabled]="loading">
+        <div class="result flex p-2" *ngFor="let perfume of results">
+            <img class="m-r-1" src="{{perfume.thumbnail}}">
+            <div>
+              <h4 class="result__title">{{perfume.naslov}}</h4>
+              <small *ngIf="perfume.collection" class="result__subtitle">{{perfume.collection}}</small>
+              <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: '+ perfume.rating.toFixed(2)">
+                <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg">
+                <small class="m-l-1">({{perfume.num_komentara}})</small>
+              </div>
+              <button [class.spinner]="perfume.loading" [disabled]="perfume.loading" class="m-t-2" color="{{perfume.saved ? 'accent': 'primary'}}" mat-mini-fab [title]="perfume.saved ? 'Remover' :'Adicionar'" (click)="addToCollection(perfume)">
+                <mat-icon aria-hidden="false" [attr.aria-label]="perfume.saved ? 'Remover' :'Adicionar'"  fontIcon="{{perfume.saved ? 'favorite': 'favorite_border'}}">
+                </mat-icon>
+              </button>
+            </div>
+        </div>
       </div>
-    </div>
-  </form>
+</div>

@@ -36,3 +36,28 @@
     object-fit: contain;
   }
 }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  filter: contrast(0.8);
+  &:before {
+    content: "" !important;
+    box-sizing: border-box !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-top: -10px !important;
+    margin-left: -10px !important;
+    border-radius: 50% !important;
+    border: 2px solid #ffffff !important;
+    border-top-color: #000000 !important;
+    animation: spinner 0.8s linear infinite !important;
+  }
+}

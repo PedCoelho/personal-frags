@@ -3,10 +3,6 @@
   justify-content: center;
   padding: calc(var(--spacing-lg) * 2) 0px;
   text-align: center;
-
-  > div {
-    width: 300px;
-  }
 }
 
 .mat-form-field {
@@ -18,16 +14,4 @@ mat-card-title,
 mat-card-content {
   display: flex;
   justify-content: center;
-}
-
-.error {
-  padding: 16px;
-  width: 300px;
-  color: white;
-  background-color: red;
-}
-
-.button {
-  display: flex;
-  justify-content: flex-end;
 }

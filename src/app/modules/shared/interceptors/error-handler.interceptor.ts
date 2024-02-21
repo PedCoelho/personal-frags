@@ -82,9 +82,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   protected showErrorNotification(errorResponse: any, status: number) {
-    const notification = {
-      message: errorResponse.message,
-    };
+    const notification = errorResponse.message;
 
     if (status === 400) {
       this.notification.warning(notification);
@@ -101,9 +99,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private showNotification(message: string) {
-    this.notification.success({
-      message,
-    });
+    this.notification.success(message);
   }
 
   private async handleBlobErrorResponse(

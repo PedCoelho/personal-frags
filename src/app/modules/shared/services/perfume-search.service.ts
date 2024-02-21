@@ -1,22 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { SearchResult } from '../components/perfume-search/models/perfume-search.models';
 import { HttpService } from './http.service';
-
-export interface PerfumeResult {
-  collection: string;
-  dizajner: string;
-  id: string;
-  naslov: string;
-  num_komentara: string;
-  num_reviews: number;
-  objectID: string;
-  picture: string;
-  rating: number;
-  spol: string;
-  thumbnail: string;
-  url: { PT: string; EN: string };
-}
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +10,24 @@ export interface PerfumeResult {
 export class PerfumeSearchService {
   constructor(private http: HttpService) {}
 
-  public query(val: string): Observable<PerfumeResult[]> {
-    return this.http.get<PerfumeResult[]>(
+  public query(val: string): Observable<SearchResult[]> {
+    return this.http.get<SearchResult[]>(
       `${environment.apiBaseUrl}/frag/${val}`
+    );
+  }
+
+  //todo type return
+  public addToCollection(perfume: SearchResult): Observable<any> {
+    const payload = {
+      name: perfume.naslov,
+      id: perfume.id,
+      url: perfume.url.PT[0],
+      thumbnail: perfume.thumbnail,
+      //todo maybe add collection and other relevant props not scraped
+    };
+    return this.http.post(
+      `${environment.apiBaseUrl}/frag/perfume/save`,
+      payload
     );
   }
 }

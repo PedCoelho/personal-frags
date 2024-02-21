@@ -7,24 +7,31 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 export class NotificationService {
   private readonly defaultConfig: MatSnackBarConfig = {
     verticalPosition: 'top',
+    duration: 5000,
   };
   constructor(private notification: MatSnackBar) {}
 
-  success(notification: { message: string }) {
+  info(notification: string) {
     this.notify({
-      message: notification.message,
+      message: notification,
       type: { ...this.defaultConfig },
     });
   }
-  warning(notification: { message: string }) {
+  success(notification: string) {
     this.notify({
-      message: notification.message,
+      message: notification,
       type: { ...this.defaultConfig },
     });
   }
-  error(notification: { message: string }) {
+  warning(notification: string) {
     this.notify({
-      message: notification.message,
+      message: notification,
+      type: { ...this.defaultConfig },
+    });
+  }
+  error(notification: string) {
+    this.notify({
+      message: notification,
       type: { ...this.defaultConfig },
     });
   }
