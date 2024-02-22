@@ -8,20 +8,20 @@ export const authGuard: CanActivateFn = (): boolean => {
 
   if (authService.isAuthenticated()) {
     return true;
+  } else {
+    router.navigateByUrl('/login');
+    return false;
   }
-
-  router.navigateByUrl('/login');
-  return false;
 };
 
 export const loginGuard: CanActivateFn = (): boolean => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return false;
-  }
+  console.log('login guard', authService.isAuthenticated());
 
-  router.navigateByUrl('/collection');
-  return true;
+  if (authService.isAuthenticated()) {
+    router.navigateByUrl('/');
+    return false;
+  } else return true;
 };

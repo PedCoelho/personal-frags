@@ -50,6 +50,7 @@ export class AuthService implements OnDestroy {
 
   public signOut() {
     this.auth.signOut();
+    this.clearToken();
     this.router.navigate(['/login']);
   }
 
