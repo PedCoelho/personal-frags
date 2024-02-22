@@ -1,6 +1,5 @@
 .wrapper {
   position: relative;
-  width: 100%;
 }
 
 .scrolling-results {
@@ -46,19 +45,15 @@
 
 .collection {
   &__wrapper {
-    width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
   }
   &__perfume {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column;
-    width: fit-content;
-    max-width: 100px;
+    height: fit-content;
+    max-width: 230px;
     padding: var(--spacing-sm);
     margin: var(--spacing-sm);
     p {
@@ -74,18 +69,32 @@
   }
   &__image {
     width: fit-content;
-    position: relative;
+    align-self: center;
     button {
       transition: all 0.2s ease;
       display: none;
       position: absolute;
-      bottom: 0;
-      right: -12px;
+      top: 0;
+      right: var(--spacing-sm);
       &:hover,
       :focus {
         display: block;
         opacity: 1;
       }
+    }
+  }
+}
+
+.notes {
+  &__wrapper {
+    padding: 5px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid rgb(219, 219, 219);
+    img {
+      flex-shrink: 1;
+      width: 25px;
+      object-fit: cover;
     }
   }
 }

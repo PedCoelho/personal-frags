@@ -33,17 +33,32 @@
   </div>
 </div>
 
-<h3 class="m-t-4">Coleçâo</h3>
+<h3 class="m-t-4">Coleção</h3>
 <div class="collection__wrapper">
-  <div tabindex="0" class="collection__perfume" *ngFor="let perfume of collection">
-    <div class="collection__image">
-      <img src="{{ perfume.thumbnail }}" />
+  <mat-card tabindex="0" class="collection__perfume" *ngFor="let perfume of collection">
+    <mat-card-title class="collection__image">
+      <img mat-card-image src="{{ perfume.thumbnail }}" />
       <button tabindex="0" [class.spinner]="loading" [disabled]="loading" class="m-t-2" mat-mini-fab title="Remover"
         color="primary" (click)="removeFromCollection(perfume)">
         <mat-icon fontIcon="delete" />
       </button>
-    </div>
-    <p>{{ perfume.name }}
-    </p>
-  </div>
+    </mat-card-title>
+    <mat-card-subtitle>{{ perfume.name }}</mat-card-subtitle>
+    <mat-card-footer>
+      <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume}"></ng-container>
+    </mat-card-footer>
+  </mat-card>
 </div>
+
+<ng-template #notes let-perfume>
+  <div class="notes__wrapper">
+    <div *ngFor="let entry of perfume.notes | keyvalue | reverse">
+      <small>{{entry.key}}</small>
+      <div class="flex wrap justify-content-center">
+        <a [matTooltip]="note.name" [href]="note.link" target="_blank" *ngFor="let note of $any(entry.value)">
+          <img [title]="note.name" width="35" src="{{note.image}}" />
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>

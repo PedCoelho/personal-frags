@@ -6,8 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TippyDirective } from './directives/tippy.directive';
 import { ReversePipe } from './pipes/reverse.pipe';
+
 const modules = [
   MatCardModule,
   MatInputModule,
@@ -16,6 +18,7 @@ const modules = [
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatIconModule,
+  MatTooltipModule,
   TippyDirective,
   ReversePipe,
 ];
