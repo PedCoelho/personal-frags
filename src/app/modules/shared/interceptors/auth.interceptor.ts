@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
           console.log(err);
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401 || err.status === 403) {
-              this.auth.clearToken();
+              this.auth.signOut();
               return err;
             }
           }
