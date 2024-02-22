@@ -7,7 +7,7 @@
   </mat-form-field>
   <div *ngIf="loading || (results.length && showResults)" class="scrolling-results" [attr.disabled]="loading">
     <div class="result flex p-2" *ngFor="let perfume of results">
-      <img class="m-r-1" src="{{ perfume.thumbnail }}" />
+      <img class="result__thumbnail m-r-1" src="{{ perfume.thumbnail }}" />
       <div>
         <div class="flex align-items-center">
           <h4 class="result__title m-r-1">{{ perfume.naslov }}
@@ -15,7 +15,6 @@
               perfume.collection
               }})</small>
           </h4>
-
         </div>
         <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: ' + perfume.rating.toFixed(2)">
           <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg" />
@@ -35,17 +34,40 @@
 
 <h3 class="m-t-4">Coleção</h3>
 <div class="collection__wrapper">
-  <mat-card tabindex="0" class="collection__perfume" *ngFor="let perfume of collection">
-    <mat-card-title class="collection__image">
-      <img mat-card-image src="{{ perfume.thumbnail }}" />
-      <button tabindex="0" [class.spinner]="loading" [disabled]="loading" class="m-t-2" mat-mini-fab title="Remover"
-        color="primary" (click)="removeFromCollection(perfume)">
-        <mat-icon fontIcon="delete" />
-      </button>
-    </mat-card-title>
-    <mat-card-subtitle>{{ perfume.name }}</mat-card-subtitle>
-    <mat-card-footer>
+  <mat-card tabindex="0" class="collection__perfume"
+    *ngFor="let perfume of collection; index as i; trackBy: trackPerfumeBy">
+    <mat-card-header>
+      <img mat-card-avatar src="{{ perfume.thumbnail }}" />
+      <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
+          {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-divider *ngIf="perfume.showNotes"></mat-divider>
+    <mat-card-content *ngIf="perfume.showNotes">
       <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume}"></ng-container>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions class="flex justify-content-space-between">
+      <div>
+        <button class="m-r-2" mat-mini-fab title="Notas" matTooltip="Notas" color="accent"
+          (click)="perfume.showNotes = !perfume.showNotes">
+          <mat-icon fontIcon="yard" />
+        </button>
+        <button mat-mini-fab title="Acordes" matTooltip="Acordes" color="accent"
+          (click)="perfume.showNotes = !perfume.showNotes">
+          <mat-icon fontIcon="bar_chart" />
+        </button>
+      </div>
+      <div>
+        <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="primary"
+          (click)=" removeFromCollection(perfume)">
+          <mat-icon fontIcon="delete" />
+        </button>
+      </div>
+    </mat-card-actions>
+    <mat-card-footer>
+      <mat-progress-bar *ngIf="perfume.loading" mode="indeterminate"></mat-progress-bar>
     </mat-card-footer>
   </mat-card>
 </div>
@@ -54,7 +76,7 @@
   <div class="notes__wrapper">
     <div *ngFor="let entry of perfume.notes | keyvalue | reverse">
       <small>{{entry.key}}</small>
-      <div class="flex wrap justify-content-center">
+      <div class="flex flex-wrap">
         <a [matTooltip]="note.name" [href]="note.link" target="_blank" *ngFor="let note of $any(entry.value)">
           <img [title]="note.name" width="35" src="{{note.image}}" />
         </a>

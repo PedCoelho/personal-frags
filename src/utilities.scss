@@ -1,13 +1,19 @@
 :root {
   .flex {
     display: flex;
-    &-column {
-      flex-flow: column;
+
+    &-wrap {
+      flex-wrap: wrap;
     }
   }
 
-  .wrap {
-    flex-wrap: wrap;
+  .align-self {
+    &-end {
+      align-self: flex-end;
+    }
+    &-start {
+      align-self: flex-start;
+    }
   }
 
   .flow {
@@ -23,8 +29,13 @@
     align-items: center;
   }
 
-  .justify-content-center {
-    justify-content: center;
+  .justify-content {
+    &-center {
+      justify-content: center;
+    }
+    &-space-between {
+      justify-content: space-between;
+    }
   }
 
   .w-100 {

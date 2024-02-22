@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserPerfume } from 'app/modules/collection/models/collection.models';
-import { UserService } from 'app/modules/shared/services/user.service';
+import { CollectionService } from 'app/modules/shared/services/collection.service';
 import {
   EMPTY,
   Subscription,
@@ -38,6 +38,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   public searchBar: FormControl = new FormControl(['']);
   public results: SearchResult[] = [];
   public collection: UserPerfume[] = [];
+
   public showResults = false;
   public loading = false;
 
@@ -45,7 +46,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private searchService: PerfumeSearchService,
-    private userService: UserService,
+    private collectionService: CollectionService,
     private notification: NotificationService
   ) {}
 
@@ -54,10 +55,68 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
     this.setupSearchListener();
   }
 
+  public ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  public arrayFromRating(rating: SearchResult['rating_rounded']) {
+    return new Array(rating);
+  }
+
+  public addToCollection(perfume: SearchResult) {
+    if (perfume.saved) return this.removeFromCollection(perfume);
+
+    this.loading = true;
+    perfume.loading = true;
+
+    this.notification.info(
+      `Salvando perfume ${perfume.naslov} na sua coleção.`
+    );
+
+    const sub = this.collectionService
+      .addToCollection(perfume)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          delete perfume.loading;
+        })
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.notification.success(`Perfume salvo com sucesso.`);
+        this.getCollection();
+      });
+
+    this.subs.push(sub);
+  }
+
+  public trackPerfumeBy(index: number, perfume: UserPerfume): string {
+    return perfume.id;
+  }
+
+  public removeFromCollection(perfume: SearchResult | UserPerfume) {
+    this.loading = true;
+    (perfume as SearchResult).loading = true;
+
+    const sub = this.collectionService
+      .removeFromCollection(perfume.id)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          delete (perfume as SearchResult).loading;
+        })
+      )
+      .subscribe(() => {
+        this.notification.success(`Perfume removido com sucesso.`);
+        this.getCollection();
+      });
+    this.subs.push(sub);
+  }
+
   //todo separate into own component
   private getCollection(): void {
     this.subs.push(
-      this.userService.getCollection().subscribe((data) => {
+      this.collectionService.getCollection().subscribe((data) => {
         this.collection = data;
         this.results = this.syncSavedResults(this.results);
       })
@@ -84,64 +143,6 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
           this.results = data ? data : [];
         })
     );
-  }
-
-  public ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
-  }
-
-  public arrayFromRating(rating: SearchResult['rating_rounded']) {
-    return new Array(rating);
-  }
-
-  public addToCollection(perfume: SearchResult) {
-    if (perfume.saved) return this.removeFromCollection(perfume);
-
-    this.loading = true;
-    perfume.loading = true;
-
-    this.notification.info(
-      `Salvando perfume ${perfume.naslov} na sua coleção.`
-    );
-
-    const sub = this.userService
-      .addToCollection(perfume)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-          delete perfume.loading;
-        })
-      )
-      .subscribe((data) => {
-        console.log(data);
-        this.notification.success(`Perfume salvo com sucesso.`);
-        this.getCollection();
-      });
-
-    this.subs.push(sub);
-  }
-
-  public closeOnClick(click: MouseEvent) {
-    console.log(click);
-  }
-
-  public removeFromCollection(perfume: SearchResult | UserPerfume) {
-    this.loading = true;
-    (perfume as SearchResult).loading = true;
-
-    const sub = this.userService
-      .removeFromCollection(perfume.id)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-          delete (perfume as SearchResult).loading;
-        })
-      )
-      .subscribe(() => {
-        this.notification.success(`Perfume removido com sucesso.`);
-        this.getCollection();
-      });
-    this.subs.push(sub);
   }
 
   private syncSavedResults(results: SearchResult[]) {

@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 .wrapper {
   position: relative;
 }
@@ -28,6 +32,10 @@
     filter: brightness(105%) saturate(125%);
   }
 
+  &__thumbnail {
+    object-fit: contain;
+  }
+
   &__title {
     margin-bottom: unset;
   }
@@ -46,7 +54,6 @@
 .collection {
   &__wrapper {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     position: relative;
   }
@@ -54,47 +61,20 @@
     cursor: pointer;
     height: fit-content;
     max-width: 230px;
-    padding: var(--spacing-sm);
     margin: var(--spacing-sm);
     p {
       margin-bottom: unset;
-    }
-    &:hover,
-    &:focus-visible {
-      button {
-        display: block;
-        opacity: 0.3;
-      }
-    }
-  }
-  &__image {
-    width: fit-content;
-    align-self: center;
-    button {
-      transition: all 0.2s ease;
-      display: none;
-      position: absolute;
-      top: 0;
-      right: var(--spacing-sm);
-      &:hover,
-      :focus {
-        display: block;
-        opacity: 1;
-      }
     }
   }
 }
 
 .notes {
   &__wrapper {
-    padding: 5px;
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid rgb(219, 219, 219);
+    a:not(:last-of-type) {
+      margin-right: var(--spacing-xs);
+    }
     img {
-      flex-shrink: 1;
-      width: 25px;
-      object-fit: cover;
+      width: 35px;
     }
   }
 }
