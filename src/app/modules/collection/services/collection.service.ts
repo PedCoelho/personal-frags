@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { UserPerfume } from 'app/modules/collection/models/collection.models';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { SearchResult } from '../components/perfume-search/models/perfume-search.models';
-import { HttpService } from './http.service';
+import { SearchResult } from '../../shared/components/perfume-search/models/perfume-search.models';
+import { HttpService } from '../../shared/services/http.service';
 
 @Injectable({
   providedIn: 'root',

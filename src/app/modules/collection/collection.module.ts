@@ -5,6 +5,8 @@ import { PerfumeSearchModule } from '../shared/components/perfume-search/perfume
 import { MaterialModule } from '../shared/material.module';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionComponent } from './container/collection.component';
+import { CollectionGridComponent } from './components/collection-grid/collection-grid.component';
+import { CollectionCardComponent } from './components/collection-card/collection-card.component';
 
 @NgModule({
   imports: [
@@ -14,7 +16,7 @@ import { CollectionComponent } from './container/collection.component';
     MaterialModule,
     PerfumeSearchModule,
   ],
-  declarations: [CollectionComponent],
+  declarations: [CollectionComponent, CollectionGridComponent, CollectionCardComponent],
   exports: [CollectionComponent],
 })
 export class CollectionModule {}

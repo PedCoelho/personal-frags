@@ -1,2 +1,4 @@
 <h4>Adicionar à Coleção</h4>
-<perfume-search></perfume-search>
+<perfume-search #search (update-list)="list.getCollection()" />
+<h4>Coleção</h4>
+<collection-grid #list />

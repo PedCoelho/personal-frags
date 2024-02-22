@@ -1,0 +1,29 @@
+.result {
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(105%) saturate(125%);
+  }
+
+  &__thumbnail {
+    object-fit: contain;
+  }
+
+  &__title {
+    margin-bottom: unset;
+  }
+  &__subtitle {
+    color: grey;
+    margin-bottom: unset;
+  }
+  &__rating-wrapper {
+    img {
+      height: 12px;
+      margin-right: 3px;
+    }
+  }
+}
