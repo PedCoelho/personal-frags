@@ -13,3 +13,15 @@ export const authGuard: CanActivateFn = (): boolean => {
   router.navigateByUrl('/login');
   return false;
 };
+
+export const loginGuard: CanActivateFn = (): boolean => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isAuthenticated()) {
+    return false;
+  }
+
+  router.navigateByUrl('/collection');
+  return true;
+};
