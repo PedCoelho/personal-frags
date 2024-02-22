@@ -1,10 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { updateCollection } from 'app/+state/app.actions';
+import { State } from 'app/+state/app.reducers';
 import { UserPerfume } from 'app/modules/collection/models/collection.models';
 import { SearchResult } from 'app/modules/shared/components/perfume-search/models/perfume-search.models';
 import { NotificationService } from 'app/modules/shared/services/notification.service';
@@ -17,11 +14,10 @@ import { CollectionService } from '../../services/collection.service';
   styleUrls: ['./collection-grid.component.scss'],
 })
 export class CollectionGridComponent implements OnDestroy, OnInit {
-  @Output('collection-loaded') dataLoaded = new EventEmitter<UserPerfume[]>();
-
   constructor(
     private notification: NotificationService,
-    private collectionService: CollectionService
+    private collectionService: CollectionService,
+    private store: Store<State>
   ) {}
 
   public loading = false;
@@ -89,9 +85,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.subs.push(
       this.collectionService.getCollection().subscribe((data) => {
         this.collection = data;
-        //todo update this
-        // this.results = this.syncSavedResults(this.results);
-        this.dataLoaded.emit(data);
+        this.store.dispatch(updateCollection({ collection: this.collection }));
       })
     );
   }

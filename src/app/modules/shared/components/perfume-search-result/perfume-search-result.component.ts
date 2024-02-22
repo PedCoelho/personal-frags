@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchResult } from '../perfume-search/models/perfume-search.models';
-import { ArrayFromNumberPipe } from './../../pipes/array-from-number.pipe';
 
 @Component({
   selector: 'perfume-search-result',
@@ -13,6 +12,6 @@ export class PerfumeSearchResultComponent {
     new EventEmitter<SearchResult>();
 
   public arrayFromRating(rating: number) {
-    return new ArrayFromNumberPipe().transform(rating);
+    return new Array(rating);
   }
 }

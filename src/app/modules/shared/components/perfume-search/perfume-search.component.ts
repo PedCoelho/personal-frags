@@ -7,6 +7,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { State } from 'app/+state/app.reducers';
 import { UserPerfume } from 'app/modules/collection/models/collection.models';
 import { CollectionService } from 'app/modules/collection/services/collection.service';
 import {
@@ -51,12 +53,22 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   public loading = false;
 
   private subs: Subscription[] = [];
+  private userCollection: UserPerfume[] = [];
 
   constructor(
     private searchService: PerfumeSearchService,
     private notification: NotificationService,
-    private collection: CollectionService
-  ) {}
+    private collection: CollectionService,
+    private store: Store<State>
+  ) {
+    this.subs.push(
+      this.store.select('collection').subscribe(({ collection }) => {
+        this.userCollection = collection;
+        this.results = this.syncSavedResults(this.results);
+        console.log(collection);
+      })
+    );
+  }
 
   public ngOnInit(): void {
     this.setupSearchListener();
@@ -82,7 +94,6 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
           map((results) => this.syncSavedResults(results))
         )
         .subscribe((data) => {
-          console.log(data);
           this.results = data ? data : [];
         })
     );
@@ -134,11 +145,11 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
   }
 
   private syncSavedResults(results: SearchResult[]) {
-    return results;
-    //todo update
-    //   return results.map((perfume: SearchResult) => ({
-    //     ...perfume,
-    //     saved: Boolean(this.collection.find((frag) => frag.id === perfume.id)),
-    //   }));
+    return results.map((perfume: SearchResult) => ({
+      ...perfume,
+      saved: Boolean(
+        this.userCollection.find((frag) => frag.id === perfume.id)
+      ),
+    }));
   }
 }
