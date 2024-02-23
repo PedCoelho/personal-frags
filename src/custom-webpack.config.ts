@@ -11,12 +11,13 @@ module.exports = {
   plugins: [
     new EnvironmentPlugin([
       // Insert the keys to your environment variables here.
-      `FIREBASE_API_KEY`,
-      `FIREBASE_DOMAIN`,
-      `FIREBASE_PROJECT`,
-      `FIREBASE_STORAGE`,
-      `FIREBASE_MESSAGING_SENDER`,
-      `FIREBASE_APP`,
+      'API_BASE_URL',
+      'FIREBASE_API_KEY',
+      'FIREBASE_DOMAIN',
+      'FIREBASE_PROJECT',
+      'FIREBASE_STORAGE',
+      'FIREBASE_MESSAGING_SENDER',
+      'FIREBASE_APP',
     ]),
   ],
 };
