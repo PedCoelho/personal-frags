@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { updateCollection } from 'app/+state/app.actions';
@@ -7,7 +8,6 @@ import { SearchResult } from 'app/modules/shared/components/perfume-search/model
 import { NotificationService } from 'app/modules/shared/services/notification.service';
 import { Subscription, finalize } from 'rxjs';
 import { CollectionService } from '../../services/collection.service';
-
 @Component({
   selector: 'collection-grid',
   templateUrl: './collection-grid.component.html',
@@ -29,6 +29,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  public drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
   }
 
   public addToCollection(perfume: SearchResult) {

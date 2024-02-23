@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +29,7 @@ const modules = [
   MatIconModule,
   MatTooltipModule,
   MatChipsModule,
+  DragDropModule,
   ReversePipe,
   SortPipe,
 ];
