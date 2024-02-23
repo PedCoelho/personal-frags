@@ -6,7 +6,7 @@
         <div class="flex round-img m-r-3">
             <img [src]="(authService.user$ | async)?.photoURL" />
         </div>
-        <span>Olá, {{(authService.user$ | async)?.displayName}}</span>
+        <span class="hide-mobile">Olá, {{(authService.user$ | async)?.displayName}}</span>
     </div>
     <span class="fill-space"></span>
     <button *ngIf="authService.isAuthenticated()" (click)="authService.signOut()" mat-button>Sair</button>

@@ -7,11 +7,17 @@
 
 .notes {
   &__wrapper {
-    a:not(:last-of-type) {
-      margin-right: var(--spacing-xs);
-    }
+    padding-bottom: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
     img {
+      border-radius: 4px;
       width: 35px;
+    }
+    a {
+      height: 35px;
+      &:not(:last-of-type) {
+        margin-right: var(--spacing-xs);
+      }
     }
   }
 }

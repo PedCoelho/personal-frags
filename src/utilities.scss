@@ -1,4 +1,10 @@
 :root {
+  @media (max-width: 768px) {
+    .hide-mobile {
+      display: none;
+    }
+  }
+
   .flex {
     display: flex;
 

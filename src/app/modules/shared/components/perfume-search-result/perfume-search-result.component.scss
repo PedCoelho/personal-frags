@@ -10,7 +10,15 @@
   }
 
   &__thumbnail {
-    object-fit: contain;
+    position: relative;
+    img {
+      object-fit: contain;
+    }
+    mat-icon {
+      position: absolute;
+      bottom: 0;
+      right: 5px;
+    }
   }
 
   &__title {
