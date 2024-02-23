@@ -32,7 +32,7 @@ jobs:
           FIREBASE_MESSAGING_SENDER: ${{ secrets.FIREBASE_MESSAGING_SENDER }}
           FIREBASE_APP: ${{ secrets.FIREBASE_APP }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
-        run: npm run build:prod
+        run: npm run build
 
       - name: Deploy
         if: success()
