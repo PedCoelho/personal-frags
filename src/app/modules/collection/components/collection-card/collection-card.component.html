@@ -4,21 +4,22 @@
         <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
                 {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
     </mat-card-header>
-    <mat-divider></mat-divider>
-
-    <mat-divider *ngIf="perfume.showNotes"></mat-divider>
+    <mat-divider *ngIf="perfume.showNotes || perfume.showAccords" />
     <mat-card-content *ngIf="perfume.showNotes">
-        <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume}"></ng-container>
+        <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume.notes}"></ng-container>
     </mat-card-content>
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="perfume.showNotes || perfume.showAccords" />
+    <mat-card-content *ngIf="perfume.showAccords">
+        <ng-container *ngTemplateOutlet="accords; context:{$implicit:perfume.accords}"></ng-container>
+    </mat-card-content>
+    <mat-divider />
     <mat-card-actions class="flex justify-content-space-between">
         <div>
             <button class="m-r-2" mat-mini-fab title="Notas" matTooltip="Notas" color="accent"
-                (click)="perfume.showNotes = !perfume.showNotes">
+                (click)="toggleNotes(perfume)">
                 <mat-icon fontIcon="yard" />
             </button>
-            <button mat-mini-fab title="Acordes" matTooltip="Acordes" color="accent"
-                (click)="perfume.showNotes = !perfume.showNotes">
+            <button mat-mini-fab title="Acordes" matTooltip="Acordes" color="accent" (click)="toggleAccords(perfume)">
                 <mat-icon fontIcon="bar_chart" />
             </button>
         </div>
@@ -35,9 +36,9 @@
 </mat-card>
 
 
-<ng-template #notes let-perfume>
+<ng-template #notes let-notes>
     <div class="notes__wrapper">
-        <div *ngFor="let entry of perfume.notes | keyvalue | reverse">
+        <div *ngFor="let entry of notes | keyvalue | reverse">
             <small>{{entry.key}}</small>
             <div class="flex flex-wrap">
                 <a [matTooltip]="note.name" [href]="note.link" target="_blank" *ngFor="let note of $any(entry.value)">
@@ -45,5 +46,14 @@
                 </a>
             </div>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #accords let-accords>
+    <div class="accords__wrapper">
+        <ng-container *ngFor="let accord of accords">
+            <small class='accords__entry' [ngStyle]=" {background:accord.background,width:accord.width}">{{accord.name}}
+            </small>
+        </ng-container>
     </div>
 </ng-template>

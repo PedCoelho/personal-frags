@@ -1,4 +1,2 @@
-<div class="collection__grid">
-    <collection-card *ngFor="let perfume of collection; trackBy: trackPerfumeBy" [perfume]="perfume"
-        (remove)="removeFromCollection($event)"></collection-card>
-</div>
+<collection-card *ngFor="let perfume of collection; trackBy: trackPerfumeBy" [perfume]="perfume"
+    (remove)="removeFromCollection($event)"></collection-card>

@@ -9,11 +9,9 @@
   --color-warn: rgb(255, 253, 116);
   --color-error: rgb(224, 111, 111);
 
-  --collection-card-width: 230px;
-
   // todo maybe improve this calculation
   //todo should be different on mobile
-  --main-column-width: calc(var(--collection-card-width) * 3 + 50px);
+  --main-column-width: 800px;
 
   .m {
     &-0 {

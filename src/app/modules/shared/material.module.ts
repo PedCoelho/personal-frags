@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TippyDirective } from './directives/tippy.directive';
 import { ReversePipe } from './pipes/reverse.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 const modules = [
   MatCardModule,
@@ -25,6 +26,7 @@ const modules = [
   MatTooltipModule,
   TippyDirective,
   ReversePipe,
+  SortPipe,
 ];
 
 @NgModule({

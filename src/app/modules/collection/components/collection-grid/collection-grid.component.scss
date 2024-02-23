@@ -1,7 +1,12 @@
-.collection {
-  &__grid {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
+:host {
+  --collection-grid-columns: 3;
+
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--collection-grid-columns), 1fr);
+  gap: var(--spacing-md);
+
+  @media (max-width: 768px) {
+    grid-template-columns: auto;
   }
 }

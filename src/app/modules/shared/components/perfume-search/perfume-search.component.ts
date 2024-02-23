@@ -65,7 +65,6 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
       this.store.select('collection').subscribe(({ collection }) => {
         this.userCollection = collection;
         this.results = this.syncSavedResults(this.results);
-        console.log(collection);
       })
     );
   }
