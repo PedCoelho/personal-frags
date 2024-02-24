@@ -22,6 +22,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   public loading = false;
   public collection: UserPerfume[] = [];
+  public collectionState: Array<Partial<UserPerfume>> = [];
   private readonly subs: Subscription[] = [];
 
   ngOnInit(): void {
@@ -31,9 +32,28 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
+  public shrinkCards() {
+    this.collectionState = [
+      ...this.collection.map(({ id, showNotes, showAccords }) => ({
+        id,
+        showNotes,
+        showAccords,
+      })),
+    ];
+    this.collection.forEach((perfume) => {
+      perfume.showNotes = false;
+      perfume.showAccords = false;
+    });
+  }
+
   public drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
     this.setUserSort();
+    this.collection.forEach((perfume) => {
+      const backup = this.collectionState.find(({ id }) => id === perfume.id);
+      perfume.showNotes = backup!.showNotes;
+      perfume.showAccords = backup!.showAccords;
+    });
   }
 
   public addToCollection(perfume: SearchResult) {
@@ -131,17 +151,18 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
+    //review not working
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);
       if (userSortIndex !== -1)
         moveItemInArray(
-          initialSortCopy,
+          initialSort,
           initialSort.indexOf(perfume),
           userSortIndex
         );
     });
 
-    return initialSortCopy;
+    return initialSort;
   }
 }
