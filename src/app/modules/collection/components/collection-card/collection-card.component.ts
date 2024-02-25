@@ -19,4 +19,11 @@ export class CollectionCardComponent {
     // perfume.showAccords = false;
     perfume.showNotes = !perfume.showNotes;
   }
+
+  public getPerfumeUrl(perfume: UserPerfume) {
+    return `https://www.fragrantica.com.br/perfume/${perfume.company.replaceAll(
+      ' ',
+      '-'
+    )}/${perfume.name.replaceAll(' ', '-')}-${perfume.id}.html`;
+  }
 }

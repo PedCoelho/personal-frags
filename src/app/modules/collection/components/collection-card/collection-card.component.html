@@ -1,6 +1,6 @@
 <mat-card *ngIf="perfume" tabindex="0" class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
-    <mat-card-header>
+    <mat-card-header (click)="perfume.showNotes = !perfume.showNotes">
         <img mat-card-avatar src="{{ perfume.thumbnail }}" />
         <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
                 {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
@@ -16,13 +16,13 @@
     <mat-divider />
     <mat-card-actions class="flex justify-content-space-between">
         <div>
-            <button class="m-r-2" mat-mini-fab title="Notas" matTooltip="Notas" color="accent"
-                (click)="toggleNotes(perfume)">
-                <mat-icon fontIcon="yard" />
-            </button>
-            <button mat-mini-fab title="Acordes" matTooltip="Acordes" color="accent" (click)="toggleAccords(perfume)">
+            <a class="m-r-2" mat-button title="Detalhes" matTooltip="Detalhes" color="accent"
+                [href]="getPerfumeUrl(perfume)" target="_blank">
+                <mat-icon fontIcon="yard" /> Detalhes
+            </a>
+            <!-- <button mat-mini-fab title="Acordes" matTooltip="Acordes" color="accent" (click)="toggleAccords(perfume)">
                 <mat-icon fontIcon="bar_chart" />
-            </button>
+            </button> -->
         </div>
         <div>
             <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="primary"
