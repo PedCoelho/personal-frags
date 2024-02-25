@@ -1,3 +1,15 @@
+export enum CollectionSortOptions {
+  CUSTOM,
+  COMPANY,
+  PERFUME,
+  // PRICE,
+}
+
+export enum CollectionFilterOptions {
+  COMPANY,
+  PERFUME,
+}
+
 export interface UserPerfume {
   id: string;
   name: string;

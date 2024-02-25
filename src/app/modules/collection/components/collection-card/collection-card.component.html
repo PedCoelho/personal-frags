@@ -1,6 +1,6 @@
 <mat-card *ngIf="perfume" tabindex="0" class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
-    <mat-card-header (click)="perfume.showNotes = !perfume.showNotes">
+    <mat-card-header class="user__perfume-header" (click)="perfume.showNotes = !perfume.showNotes">
         <img mat-card-avatar src="{{ perfume.thumbnail }}" />
         <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
                 {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>

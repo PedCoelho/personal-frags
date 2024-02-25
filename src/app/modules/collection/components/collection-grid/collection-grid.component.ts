@@ -1,9 +1,14 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { updateCollection } from 'app/+state/app.actions';
 import { State } from 'app/+state/app.reducers';
-import { UserPerfume } from 'app/modules/collection/models/collection.models';
+import {
+  CollectionFilterOptions,
+  CollectionSortOptions,
+  UserPerfume,
+} from 'app/modules/collection/models/collection.models';
 import { SearchResult } from 'app/modules/shared/components/perfume-search/models/perfume-search.models';
 import { NotificationService } from 'app/modules/shared/services/notification.service';
 import { Subscription, finalize, map } from 'rxjs';
@@ -20,6 +25,31 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     private store: Store<State>
   ) {}
 
+  public readonly filterOptions: {
+    label: string;
+    value: CollectionFilterOptions;
+  }[] = [
+    { label: 'Empresa', value: CollectionFilterOptions.COMPANY },
+    { label: 'Perfume', value: CollectionFilterOptions.PERFUME },
+  ];
+
+  public readonly sortOptions: {
+    label: string;
+    value: CollectionSortOptions;
+    disabled?: boolean;
+  }[] = [
+    { label: 'Empresa', value: CollectionSortOptions.COMPANY },
+    { label: 'Perfume', value: CollectionSortOptions.PERFUME },
+    {
+      label: 'Customizada',
+      value: CollectionSortOptions.CUSTOM,
+      disabled: true,
+    },
+  ];
+
+  public sortMethod: FormControl = new FormControl(
+    CollectionSortOptions.COMPANY
+  );
   public loading = false;
   public collection: UserPerfume[] = [];
   public collectionState: Array<Partial<UserPerfume>> = [];
@@ -27,6 +57,20 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.getCollection();
+    this.subs.push(
+      this.sortMethod.valueChanges.subscribe((value) => {
+        switch (value) {
+          case CollectionSortOptions.COMPANY:
+            this.clearSort();
+            this.collection = this.collectionSort(this.collection);
+            break;
+          case CollectionSortOptions.PERFUME:
+            this.clearSort();
+            this.collection = this.collection.sort(this.nameSort);
+            break;
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -123,22 +167,23 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
       'collection-sort',
       this.collection.map((perfume, i) => perfume.id).join(',')
     );
+    this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
   }
 
-  private getUserSort(): string[] | undefined {
+  public getUserSort(): string[] | undefined {
     const data = localStorage.getItem('collection-sort')?.split(',');
     if (data?.length) return data;
     else return undefined;
   }
 
+  private companySort = (a: UserPerfume, b: UserPerfume) =>
+    b.company > a.company ? -1 : 1;
+
+  private nameSort = (a: UserPerfume, b: UserPerfume) =>
+    b.name > a.name ? -1 : 1;
+
   private collectionSort(data: UserPerfume[]): UserPerfume[] {
-    const companySort = (a: UserPerfume, b: UserPerfume) =>
-      b.company > a.company ? -1 : 1;
-
-    const nameSort = (a: UserPerfume, b: UserPerfume) =>
-      b.name > a.name ? -1 : 1;
-
-    const initialSort = data.sort(nameSort).sort(companySort);
+    const initialSort = data.sort(this.nameSort).sort(this.companySort);
 
     const userSort = this.getUserSort();
 
@@ -149,6 +194,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
+    this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);
@@ -161,6 +207,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     });
 
     return initialSort;
+  }
+
+  public clearSort() {
+    localStorage.removeItem('collection-sort');
   }
 
   private restoreCardStates() {
