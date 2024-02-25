@@ -28,6 +28,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.getCollection();
   }
+
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
@@ -49,11 +50,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   public drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
     this.setUserSort();
-    this.collection.forEach((perfume) => {
-      const backup = this.collectionState.find(({ id }) => id === perfume.id);
-      perfume.showNotes = backup!.showNotes;
-      perfume.showAccords = backup!.showAccords;
-    });
+    this.restoreCardStates();
   }
 
   public addToCollection(perfume: SearchResult) {
@@ -147,11 +144,11 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
     return userSort ? this.applyUserSort(userSort, initialSort) : initialSort;
   }
+
   private applyUserSort(
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
-    //review not working
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);
@@ -164,5 +161,13 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     });
 
     return initialSort;
+  }
+
+  private restoreCardStates() {
+    this.collection.forEach((perfume) => {
+      const backup = this.collectionState.find(({ id }) => id === perfume.id);
+      perfume.showNotes = backup!.showNotes;
+      perfume.showAccords = backup!.showAccords;
+    });
   }
 }

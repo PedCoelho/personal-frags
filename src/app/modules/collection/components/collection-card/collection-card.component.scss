@@ -7,17 +7,67 @@ mat-card.user__perfume {
 }
 
 .notes {
+  &__group {
+    p {
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      p {
+        font-size: inherit;
+        margin-bottom: var(--spacing-sm) !important;
+      }
+    }
+  }
+  &__grid {
+    --image-size: 35px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--image-size));
+    gap: var(--spacing-sm);
+    @media (max-width: 768px) {
+      --image-size: 50px;
+    }
+  }
   &__wrapper {
     padding-bottom: var(--spacing-sm);
     padding-top: var(--spacing-sm);
+  }
+
+  &__note-body {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    width: 100%;
+
     img {
       border-radius: 4px;
-      width: 35px;
+      max-width: 100%;
     }
+
     a {
-      height: 35px;
-      &:not(:last-of-type) {
-        margin-right: var(--spacing-xs);
+      line-height: 15px;
+      display: inline-block;
+      max-width: 100%;
+    }
+  }
+
+  &__note-name {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    small {
+      display: none;
+      text-wrap: balance;
+      // text-align: center;
+      margin-top: var(--spacing-xs);
+    }
+
+    @media (max-width: 768px) {
+      small {
+        display: inline;
+        max-width: 100%;
       }
     }
   }

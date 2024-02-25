@@ -40,7 +40,7 @@ const modules = [
   providers: [
     {
       provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-      useValue: { showDelay: 150, hideDelay: 0, touchGestures: 'auto' },
+      useValue: { showDelay: 150, hideDelay: 0, touchGestures: 'off' },
     },
   ],
   declarations: [],

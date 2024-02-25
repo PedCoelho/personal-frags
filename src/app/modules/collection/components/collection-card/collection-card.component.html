@@ -39,12 +39,17 @@
 
 <ng-template #notes let-notes>
     <div class="notes__wrapper">
-        <div *ngFor="let entry of notes | keyvalue | reverse">
-            <small>{{entry.key}}</small>
-            <div class="flex flex-wrap">
-                <a [matTooltip]="note.name" [href]="note.link" target="_blank" *ngFor="let note of $any(entry.value)">
-                    <img [title]="note.name" width="35" src="{{note.image}}" />
-                </a>
+        <div class="notes__group m-b-2" *ngFor="let entry of notes | keyvalue | reverse">
+            <p>{{entry.key}}</p>
+            <div class="notes__grid">
+                <div class="notes__note-body" [matTooltip]="note.name" *ngFor="let note of $any(entry.value)">
+                    <a [href]="note.link" target="_blank">
+                        <img [title]="note.name" src="{{note.image}}" />
+                        <div class="notes__note-name">
+                            <small>{{note.name}}</small>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
