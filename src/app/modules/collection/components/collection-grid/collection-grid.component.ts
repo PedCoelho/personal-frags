@@ -1,11 +1,9 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { updateCollection } from 'app/+state/app.actions';
 import { State } from 'app/+state/app.reducers';
 import {
-  CollectionFilterOptions,
   CollectionSortOptions,
   UserPerfume,
 } from 'app/modules/collection/models/collection.models';
@@ -25,31 +23,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     private store: Store<State>
   ) {}
 
-  public readonly filterOptions: {
-    label: string;
-    value: CollectionFilterOptions;
-  }[] = [
-    { label: 'Empresa', value: CollectionFilterOptions.COMPANY },
-    { label: 'Perfume', value: CollectionFilterOptions.PERFUME },
-  ];
-
-  public readonly sortOptions: {
-    label: string;
-    value: CollectionSortOptions;
-    disabled?: boolean;
-  }[] = [
-    { label: 'Empresa', value: CollectionSortOptions.COMPANY },
-    { label: 'Perfume', value: CollectionSortOptions.PERFUME },
-    {
-      label: 'Customizada',
-      value: CollectionSortOptions.CUSTOM,
-      disabled: true,
-    },
-  ];
-
-  public sortMethod: FormControl = new FormControl(
-    CollectionSortOptions.COMPANY
-  );
   public loading = false;
   public collection: UserPerfume[] = [];
   public collectionState: Array<Partial<UserPerfume>> = [];
@@ -57,20 +30,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.getCollection();
-    this.subs.push(
-      this.sortMethod.valueChanges.subscribe((value) => {
-        switch (value) {
-          case CollectionSortOptions.COMPANY:
-            this.clearSort();
-            this.collection = this.collectionSort(this.collection);
-            break;
-          case CollectionSortOptions.PERFUME:
-            this.clearSort();
-            this.collection = this.collection.sort(this.nameSort);
-            break;
-        }
-      })
-    );
   }
 
   ngOnDestroy(): void {
@@ -161,13 +120,26 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     );
   }
 
+  public handleSorting(value: CollectionSortOptions) {
+    switch (value) {
+      case CollectionSortOptions.COMPANY:
+        this.clearSort();
+        this.collection = this.collectionSort(this.collection);
+        break;
+      case CollectionSortOptions.PERFUME:
+        this.clearSort();
+        this.collection = this.collection.sort(this.nameSort);
+        break;
+    }
+  }
+
   private setUserSort(): void {
     //todo when userSort is added, show a way to reset user sort
     localStorage.setItem(
       'collection-sort',
       this.collection.map((perfume, i) => perfume.id).join(',')
     );
-    this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
+    // this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
   }
 
   public getUserSort(): string[] | undefined {
@@ -194,7 +166,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
-    this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
+    // this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);
@@ -209,7 +181,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     return initialSort;
   }
 
-  public clearSort() {
+  private clearSort() {
     localStorage.removeItem('collection-sort');
   }
 

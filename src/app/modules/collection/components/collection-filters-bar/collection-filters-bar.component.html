@@ -1,0 +1,10 @@
+<mat-form-field>
+    <mat-label>Ordem</mat-label>
+    <mat-select [formControl]="sortMethod">
+        <mat-option *ngFor="let option of sortOptions" [value]="option.value"
+            [disabled]="option.disabled">{{option.label}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<button color="secondary" class="m-l-2 m-b-2" mat-button (click)="sortMethod.setValue(1)" *ngIf="clearEnabled">
+    <mat-icon fontIcon="sort_alt_off"></mat-icon>limpar
+</button>
