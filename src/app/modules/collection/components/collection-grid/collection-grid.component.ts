@@ -162,6 +162,8 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.collection = this.collectionBackup.filter((perfume) =>
       filters.some((company: string) => perfume.company === company)
     );
+
+    this.handleSorting(this.filterBar.sortMethod.value);
   }
 
   private companySort = (a: UserPerfume, b: UserPerfume) =>
