@@ -1,8 +1,31 @@
-.user__perfume {
+mat-card {
   position: relative;
   cursor: pointer;
   p {
     margin-bottom: unset;
+  }
+}
+
+.user__perfume {
+  &-header {
+    display: flex;
+    flex-flow: column;
+  }
+  mat-chip-set {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+
+    mat-chip {
+      --mdc-chip-container-width: fit-content !important;
+      --mdc-chip-container-height: fit-content !important;
+      --mdc-chip-label-text-size: 12px !important;
+
+      span {
+        padding-left: var(--spacing-sm) !important;
+        padding-right: var(--spacing-sm) !important;
+      }
+    }
   }
 }
 

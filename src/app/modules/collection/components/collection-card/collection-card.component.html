@@ -1,10 +1,22 @@
 <mat-card *ngIf="perfume" tabindex="0" class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
-    <mat-card-header class="user__perfume-header" (click)="perfume.showNotes = !perfume.showNotes">
-        <img mat-card-avatar src="{{ perfume.thumbnail }}" />
-        <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
-                {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
-    </mat-card-header>
+    <div class="user__perfume-header" (click)="perfume.showNotes = !perfume.showNotes">
+        <mat-card-header>
+            <img mat-card-avatar src="{{ perfume.thumbnail }}" />
+            <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
+                    {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
+
+        </mat-card-header>
+        <mat-chip-set>
+            <mat-chip>option a</mat-chip>
+            <mat-chip [ngStyle]="{background:'rgb(244,24,42)'}">option a</mat-chip>
+            <mat-chip>option b</mat-chip>
+        </mat-chip-set>
+    </div>
+    <mat-card-content>
+
+
+    </mat-card-content>
     <mat-divider *ngIf="perfume.showNotes || perfume.showAccords" />
     <mat-card-content *ngIf="perfume.showNotes">
         <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume.notes}"></ng-container>
@@ -25,10 +37,15 @@
             </button> -->
         </div>
         <div>
-            <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="primary"
+            <button mat-mini-fab title="Editar" matTooltip="Editar" class="m-r-1" color="secondary"
+                (click)="edit(perfume)">
+                <mat-icon fontIcon="edit" />
+            </button>
+            <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="secondary"
                 (click)="removeActionClicked.emit(perfume)">
                 <mat-icon fontIcon="delete" />
             </button>
+
         </div>
     </mat-card-actions>
     <mat-card-footer>
@@ -63,3 +80,19 @@
         </ng-container>
     </div>
 </ng-template>
+
+
+<mat-dialog>
+    <h2 mat-dialog-title>Hi {{data.name}}</h2>
+    <mat-dialog-content>
+        <p>What's your favorite animal?</p>
+        <mat-form-field>
+            <mat-label>Favorite Animal</mat-label>
+            <input matInput [(ngModel)]="data.animal">
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+    </mat-dialog-actions>
+</mat-dialog>

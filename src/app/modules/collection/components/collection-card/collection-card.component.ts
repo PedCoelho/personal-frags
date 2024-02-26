@@ -26,4 +26,6 @@ export class CollectionCardComponent {
       '-'
     )}/${perfume.name.replaceAll(' ', '-')}-${perfume.id}.html`;
   }
+
+  public edit(perfume: UserPerfume) {}
 }
