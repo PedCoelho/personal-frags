@@ -1,4 +1,5 @@
-<collection-filters-bar [show-clear]="!!getUserSort()" (sorted)="handleSorting($event)"></collection-filters-bar>
+<collection-filters-bar [show-clear]="!!getUserSort()" (sorted)="handleSorting($event)"
+    (company-filtered)="handleCompanyFiltering($event)" (filters-cleared)="clearFilters()"></collection-filters-bar>
 <div class="collection__grid-container" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let perfume of collection; trackBy: trackPerfumeBy">
         <collection-card cdkDrag [perfume]="perfume" (remove)="removeFromCollection($event)"

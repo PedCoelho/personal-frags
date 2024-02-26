@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { updateCollection } from 'app/+state/app.actions';
 import { State } from 'app/+state/app.reducers';
@@ -11,12 +11,16 @@ import { SearchResult } from 'app/modules/shared/components/perfume-search/model
 import { NotificationService } from 'app/modules/shared/services/notification.service';
 import { Subscription, finalize, map } from 'rxjs';
 import { CollectionService } from '../../services/collection.service';
+import { CollectionFiltersBarComponent } from '../collection-filters-bar/collection-filters-bar.component';
 @Component({
   selector: 'collection-grid',
   templateUrl: './collection-grid.component.html',
   styleUrls: ['./collection-grid.component.scss'],
 })
 export class CollectionGridComponent implements OnDestroy, OnInit {
+  @ViewChild(CollectionFiltersBarComponent)
+  filterBar!: CollectionFiltersBarComponent;
+
   constructor(
     private notification: NotificationService,
     private collectionService: CollectionService,
@@ -24,6 +28,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   ) {}
 
   public loading = false;
+  public collectionBackup: UserPerfume[] = [];
   public collection: UserPerfume[] = [];
   public collectionState: Array<Partial<UserPerfume>> = [];
   private readonly subs: Subscription[] = [];
@@ -113,6 +118,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
         .pipe(map((data) => this.collectionSort(data)))
         .subscribe((data) => {
           this.collection = data;
+          this.collectionBackup = data;
           this.store.dispatch(
             updateCollection({ collection: this.collection })
           );
@@ -134,18 +140,28 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
 
   private setUserSort(): void {
-    //todo when userSort is added, show a way to reset user sort
     localStorage.setItem(
       'collection-sort',
       this.collection.map((perfume, i) => perfume.id).join(',')
     );
-    // this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
+    this.filterBar.setSortMethod(CollectionSortOptions.CUSTOM);
   }
 
   public getUserSort(): string[] | undefined {
     const data = localStorage.getItem('collection-sort')?.split(',');
     if (data?.length) return data;
     else return undefined;
+  }
+
+  public clearFilters() {
+    console.log('clear filters');
+    this.collection = this.collectionBackup;
+  }
+
+  public handleCompanyFiltering(filters: any) {
+    this.collection = this.collectionBackup.filter((perfume) =>
+      filters.some((company: string) => perfume.company === company)
+    );
   }
 
   private companySort = (a: UserPerfume, b: UserPerfume) =>
@@ -166,7 +182,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
-    // this.sortMethod.setValue(CollectionSortOptions.CUSTOM);
+    this.filterBar.setSortMethod(CollectionSortOptions.CUSTOM);
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);

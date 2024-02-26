@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    flex-flow: column;
+  }
+}

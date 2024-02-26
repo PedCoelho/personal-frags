@@ -6,6 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { State } from 'app/+state/app.reducers';
 import { Subscription } from 'rxjs';
 import {
   CollectionFilterOptions,
@@ -20,6 +22,8 @@ import {
 export class CollectionFiltersBarComponent implements OnDestroy {
   @Input('show-clear') clearEnabled = false;
   @Output() sorted = new EventEmitter<CollectionSortOptions>();
+  @Output('company-filtered') filterByCompany = new EventEmitter<string[]>();
+  @Output('filters-cleared') filtersCleared = new EventEmitter();
 
   public readonly subs: Subscription[] = [];
 
@@ -48,16 +52,45 @@ export class CollectionFiltersBarComponent implements OnDestroy {
   public sortMethod: FormControl = new FormControl(
     CollectionSortOptions.COMPANY
   );
+  public companyFilter: FormControl = new FormControl([[]]);
 
-  constructor() {
+  public companyOptions: string[] = [];
+
+  constructor(private store: Store<State>) {
+    this.getCompanyFilterOptions();
+    this.setupFormListeners();
+  }
+
+  private getCompanyFilterOptions() {
+    this.subs.push(
+      this.store.select('collection').subscribe(({ collection }) => {
+        this.companyOptions = [
+          ...new Set(collection.map((perfume) => perfume.company)),
+        ];
+      })
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  public setSortMethod(method: CollectionSortOptions) {
+    this.sortMethod.setValue(method);
+  }
+
+  private setupFormListeners() {
     this.subs.push(
       this.sortMethod.valueChanges.subscribe((val) => {
         if (val) this.sorted.emit(val);
       })
     );
-  }
 
-  ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
+    this.subs.push(
+      this.companyFilter.valueChanges.subscribe((val) => {
+        if (val.length) this.filterByCompany.emit(val);
+        else this.filtersCleared.emit();
+      })
+    );
   }
 }
