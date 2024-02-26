@@ -17,6 +17,7 @@ import {
 } from '@angular/material/tooltip';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { StringifyPropertyPipe } from './pipes/stringify-property.pipe';
 
 const modules = [
   MatCardModule,
@@ -34,6 +35,7 @@ const modules = [
   DragDropModule,
   ReversePipe,
   SortPipe,
+  StringifyPropertyPipe,
 ];
 
 @NgModule({

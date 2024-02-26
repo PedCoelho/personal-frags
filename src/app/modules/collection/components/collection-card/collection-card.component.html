@@ -3,6 +3,7 @@
     <mat-card-header class="user__perfume-header" (click)="perfume.showNotes = !perfume.showNotes">
         <img mat-card-avatar src="{{ perfume.thumbnail }}" />
         <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
+                {{perfume.perfumers ? (perfume.perfumers | propsToString:"name" )+ " | " :""}}
                 {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
     </mat-card-header>
     <mat-divider *ngIf="perfume.showNotes || perfume.showAccords" />

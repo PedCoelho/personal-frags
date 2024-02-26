@@ -18,6 +18,7 @@ export interface UserPerfume {
   rating: number;
   notes: Record<string, PerfumeNote[]>;
   accords: PerfumeAccord[];
+  perfumers?: { name: string; url: string; image: string }[];
   loading?: boolean;
   showNotes?: boolean;
   showAccords?: boolean;
