@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxColorsModule } from 'ngx-colors';
 import { PerfumeSearchModule } from '../shared/components/perfume-search/perfume-search.module';
 import { MaterialModule } from '../shared/material.module';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionCardComponent } from './components/collection-card/collection-card.component';
 import { CollectionFiltersBarComponent } from './components/collection-filters-bar/collection-filters-bar.component';
 import { CollectionGridComponent } from './components/collection-grid/collection-grid.component';
+import { PerfumeEditModalComponent } from './components/perfume-edit-modal/perfume-edit-modal.component';
 import { CollectionComponent } from './container/collection.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -16,12 +17,14 @@ import { CollectionComponent } from './container/collection.component';
     CollectionRoutingModule,
     MaterialModule,
     PerfumeSearchModule,
+    NgxColorsModule,
   ],
   declarations: [
     CollectionComponent,
     CollectionGridComponent,
     CollectionCardComponent,
     CollectionFiltersBarComponent,
+    PerfumeEditModalComponent,
   ],
   exports: [CollectionComponent],
 })

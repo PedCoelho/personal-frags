@@ -1,12 +1,20 @@
 <mat-card *ngIf="perfume" tabindex="0" class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
-    <mat-card-header class="user__perfume-header" (click)="perfume.showNotes = !perfume.showNotes">
-        <img mat-card-avatar src="{{ perfume.thumbnail }}" />
-        <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
-                {{perfume.perfumers ? (perfume.perfumers | propsToString:"name" )+ " | " :""}}
-                {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
+    <mat-card-header (click)="perfume.showNotes = !perfume.showNotes">
+        <section>
+            <img mat-card-avatar src="{{ perfume.thumbnail }}" />
+            <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
+                    {{perfume.perfumers ? (perfume.perfumers | propsToString:"name" )+ " | " :""}}
+                    {{perfume.rating.toFixed(2)}})</small></mat-card-subtitle>
+        </section>
+        <section *ngIf="perfume.user_tags?.length">
+            <mat-chip-set>
+                <mat-chip *ngFor="let tag of perfume.user_tags"
+                    [ngStyle]="{background:tag.color}">{{tag.label}}</mat-chip>
+            </mat-chip-set>
+        </section>
     </mat-card-header>
-    <mat-divider *ngIf="perfume.showNotes || perfume.showAccords" />
+    <mat-divider *ngIf=" perfume.showNotes || perfume.showAccords" />
     <mat-card-content *ngIf="perfume.showNotes">
         <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume.notes}"></ng-container>
     </mat-card-content>
@@ -26,10 +34,15 @@
             </button> -->
         </div>
         <div>
-            <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="primary"
+            <button mat-mini-fab title="Editar" matTooltip="Editar" class="m-r-1" color="secondary"
+                (click)="edit(perfume)">
+                <mat-icon fontIcon="edit" />
+            </button>
+            <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="secondary"
                 (click)="removeActionClicked.emit(perfume)">
                 <mat-icon fontIcon="delete" />
             </button>
+
         </div>
     </mat-card-actions>
     <mat-card-footer>

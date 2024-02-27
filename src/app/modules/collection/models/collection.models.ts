@@ -22,6 +22,30 @@ export interface UserPerfume {
   loading?: boolean;
   showNotes?: boolean;
   showAccords?: boolean;
+  user_tags?: PerfumeTag[];
+  user_rating?: number;
+  user_owned?: OwnershipStatus;
+  user_price?: number;
+}
+
+export enum OwnershipStatus {
+  OWNED = 'owned',
+  WANTED = 'wanted',
+  PREVIOUSLY_OWNED = 'previously-owned',
+}
+
+export const ownershipStatusOptions: {
+  label: string;
+  value: OwnershipStatus;
+}[] = [
+  { label: 'Tenho', value: OwnershipStatus.OWNED },
+  { label: 'Tive', value: OwnershipStatus.PREVIOUSLY_OWNED },
+  { label: 'Quero', value: OwnershipStatus.WANTED },
+];
+
+export interface PerfumeTag {
+  label: string;
+  color?: string;
 }
 
 export interface PerfumeNote {

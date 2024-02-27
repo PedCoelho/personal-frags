@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CollectionCardComponent } from './collection-card.component';
+import CollectionCardComponent from './collection-card.component';
 
 describe('CollectionCardComponent', () => {
   let component: CollectionCardComponent;
@@ -8,7 +8,7 @@ describe('CollectionCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CollectionCardComponent]
+      declarations: [CollectionCardComponent],
     });
     fixture = TestBed.createComponent(CollectionCardComponent);
     component = fixture.componentInstance;

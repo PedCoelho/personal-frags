@@ -1,8 +1,37 @@
-.user__perfume {
+mat-card {
   position: relative;
   cursor: pointer;
   p {
     margin-bottom: unset;
+  }
+}
+
+mat-card-header {
+  display: flex;
+  flex-flow: column;
+
+  img.mat-mdc-card-avatar {
+    margin-right: var(--spacing-sm);
+    margin-bottom: unset;
+  }
+
+  section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+  }
+}
+mat-chip-set {
+  mat-chip {
+    --mdc-chip-container-width: fit-content !important;
+    --mdc-chip-container-height: fit-content !important;
+    --mdc-chip-label-text-size: 12px !important;
+
+    span {
+      padding-left: var(--spacing-sm) !important;
+      padding-right: var(--spacing-sm) !important;
+    }
   }
 }
 

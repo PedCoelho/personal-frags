@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Editar {{perfume.name}}</h2>
+<mat-dialog-content>
+    <form [formGroup]="perfumeForm">
+        <section>
+            <h3>Preço</h3>
+            <mat-form-field subscriptSizing="dynamic">
+                <mat-label>R$ (100ml)</mat-label>
+                <input type="number" matInput formControlName="user_price">
+            </mat-form-field>
+        </section>
+        <section class="rating">
+            <h3>Nota</h3>
+            <mat-button-toggle-group formControlName="user_rating">
+                <mat-button-toggle [value]="1">1</mat-button-toggle>
+                <mat-button-toggle [value]="2">2</mat-button-toggle>
+                <mat-button-toggle [value]="3">3</mat-button-toggle>
+                <mat-button-toggle [value]="4">4</mat-button-toggle>
+                <mat-button-toggle [value]="5">5</mat-button-toggle>
+            </mat-button-toggle-group>
+        </section>
+        <section class="owned">
+            <h3>Coleção</h3>
+            <mat-button-toggle-group formControlName="user_owned">
+                <mat-button-toggle *ngFor="let option of ownershipOptions"
+                    [value]="option.value">{{option.label}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </section>
+        <section class="tags">
+            <h3>Tags</h3>
+            <mat-form-field subscriptSizing="dynamic" class="example-chip-list">
+                <mat-label>Tags</mat-label>
+                <mat-chip-grid #chipGrid>
+                    <mat-chip-row *ngFor="let tag of perfumeForm.value.user_tags; index as i" (removed)="
+                        removeTag(i)" [editable]="true" (edited)="editTag(i, $event)"
+                        [ngStyle]="{background:tag.color}">
+                        {{tag.label}}
+                        <button matChipRemove>
+                            <mat-icon>cancelar</mat-icon>
+                        </button>
+                        <span class="color-picker" matChipTrailingIcon ngx-colors-trigger
+                            (change)="pickTagColor($event,i)">
+                            <mat-icon class=" mat-mdc-chip-remove mdc-evolution-chip__icon
+                                mdc-evolution-chip__icon--trailing mdc-evolution-chip__action" fontIcon="palette">
+                            </mat-icon>
+                        </span>
+                    </mat-chip-row>
+                    <input placeholder="Nova Tag" [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                        (matChipInputTokenEnd)="addTag($event)" />
+                </mat-chip-grid>
+            </mat-form-field>
+        </section>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+    <button mat-button [disabled]="perfumeForm.invalid || perfumeForm.pristine" [mat-dialog-close]="perfumeForm.value"
+        cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>

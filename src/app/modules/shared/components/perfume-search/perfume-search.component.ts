@@ -109,7 +109,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
     );
 
     const sub = this.collection
-      .addToCollection(perfume)
+      .addPerfume(perfume)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -129,7 +129,7 @@ export class PerfumeSearchComponent implements OnInit, OnDestroy {
     perfume.loading = true;
 
     const sub = this.collection
-      .removeFromCollection(perfume.id)
+      .removePerfume(perfume.id)
       .pipe(
         finalize(() => {
           this.loading = false;
