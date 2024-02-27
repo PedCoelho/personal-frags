@@ -30,7 +30,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   public loading = false;
   public collectionBackup: UserPerfume[] = [];
   public collection: UserPerfume[] = [];
-  public collectionState: Array<Partial<UserPerfume>> = [];
   private readonly subs: Subscription[] = [];
 
   ngOnInit(): void {
@@ -42,13 +41,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
 
   public shrinkCards() {
-    this.collectionState = [
-      ...this.collection.map(({ id, showNotes, showAccords }) => ({
-        id,
-        showNotes,
-        showAccords,
-      })),
-    ];
     this.collection.forEach((perfume) => {
       perfume.showNotes = false;
       perfume.showAccords = false;
@@ -58,7 +50,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   public drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
     this.setUserSort();
-    this.restoreCardStates();
   }
 
   public addToCollection(perfume: SearchResult) {
@@ -201,13 +192,5 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   private clearSort() {
     localStorage.removeItem('collection-sort');
-  }
-
-  private restoreCardStates() {
-    this.collection.forEach((perfume) => {
-      const backup = this.collectionState.find(({ id }) => id === perfume.id);
-      perfume.showNotes = backup!.showNotes;
-      perfume.showAccords = backup!.showAccords;
-    });
   }
 }

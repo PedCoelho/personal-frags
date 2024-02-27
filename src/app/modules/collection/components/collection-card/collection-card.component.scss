@@ -22,6 +22,7 @@ mat-card-header {
     margin-bottom: var(--spacing-sm);
   }
 }
+
 mat-chip-set {
   mat-chip {
     --mdc-chip-container-width: fit-content !important;
@@ -31,6 +32,32 @@ mat-chip-set {
     span {
       padding-left: var(--spacing-sm) !important;
       padding-right: var(--spacing-sm) !important;
+    }
+  }
+}
+
+mat-accordion:ng-deep {
+  padding: var(--spacing-xs);
+
+  .mat-expansion-panel-body {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-bottom: 16px !important;
+  }
+}
+.mat-expansion-panel {
+  margin-bottom: 2px;
+
+  &-header {
+    padding: 0 16px;
+    &.mat-expanded {
+      height: calc(
+        var(--mat-expansion-header-collapsed-state-height) + var(--spacing-sm)
+      );
+    }
+
+    &-description {
+      justify-content: flex-end;
     }
   }
 }
@@ -57,10 +84,6 @@ mat-chip-set {
     @media (max-width: 768px) {
       --image-size: 50px;
     }
-  }
-  &__wrapper {
-    padding-bottom: var(--spacing-sm);
-    padding-top: var(--spacing-sm);
   }
 
   &__note-body {

@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -34,6 +35,7 @@ const modules = [
   MatDialogModule,
   MatTooltipModule,
   MatChipsModule,
+  MatExpansionModule,
   MatSelectModule,
   DragDropModule,
   MatButtonToggleModule,
