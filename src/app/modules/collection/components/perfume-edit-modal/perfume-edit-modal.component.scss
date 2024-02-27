@@ -1,0 +1,42 @@
+:host {
+  form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    gap: var(--spacing-md);
+
+    mat-button-toggle-group {
+      display: flex;
+      > mat-button-toggle {
+        flex-grow: 1;
+      }
+    }
+
+    .rating {
+      grid-column: 1/1;
+    }
+    .owned {
+      grid-column: 1/1;
+    }
+    .tags {
+      grid-column: 1/-1;
+      display: flex;
+      flex-flow: column;
+      width: 380px;
+    }
+
+    @media (max-width: 768px) {
+      .tags {
+        max-width: 70vw;
+      }
+    }
+  }
+  h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+  }
+}

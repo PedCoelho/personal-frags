@@ -1,6 +1,7 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -34,6 +35,7 @@ const modules = [
   MatChipsModule,
   MatSelectModule,
   DragDropModule,
+  MatButtonToggleModule,
   ReversePipe,
   SortPipe,
 ];

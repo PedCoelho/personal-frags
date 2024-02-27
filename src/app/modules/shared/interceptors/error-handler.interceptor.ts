@@ -7,8 +7,8 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { catchError, first, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { NotificationService } from './../services/notification.service';
 
 @Injectable({ providedIn: 'root' })
@@ -46,28 +46,29 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   //@ts-ignore
   processErrorResponse(response: HttpErrorResponse) {
     console.log(response);
-    let errorResponse = { code: 500, message: response.message };
+    let errorResponse = {
+      code: 500,
+      message: response.error || response.message || response,
+    };
 
     // Handle no-json edge cases by status code
-    switch (response.status) {
-      case 500:
-        errorResponse = {
-          code: 500,
-          message: 'Erro interno do servidor',
-        };
-        break;
+    switch (
+      response.status
+      // case 500:
+      //   errorResponse = {
+      //     code: 500,
+      //     message: 'Erro interno do servidor',
+      //   };
+      //   break;
+    ) {
     }
 
-    if (this.expectingBlob) {
-      return this.handleBlobErrorResponse(response);
+    if (!errorResponse) {
+      errorResponse = {
+        code: 0,
+        message: `Servidor não está respondendo.`,
+      };
     }
-
-    // if (!errorResponse) {
-    //   errorResponse = {
-    //     code: 0,
-    //     message: `Servidor não está respondendo.`,
-    //   };
-    // }
 
     // dont show notification when request header has NoError parameter on it.
     if (errorResponse && errorResponse.message) {
@@ -94,27 +95,5 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private showNotification(message: string) {
     this.notification.success(message);
-  }
-
-  private async handleBlobErrorResponse(
-    response: HttpErrorResponse
-  ): Promise<void> {
-    const defaultResponse = {
-      code: 0,
-      message: 'Erro: Esperando blob',
-    };
-
-    try {
-      from(response.error.text())
-        .pipe(
-          first(),
-          catchError(() => of(defaultResponse))
-        )
-        .subscribe((errorResponse: any) => {
-          this.showErrorNotification(errorResponse, response.status);
-        });
-    } catch {
-      this.showErrorNotification(defaultResponse, response.status);
-    }
   }
 }

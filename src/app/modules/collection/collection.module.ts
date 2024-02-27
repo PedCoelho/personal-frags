@@ -7,6 +7,7 @@ import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionCardComponent } from './components/collection-card/collection-card.component';
 import { CollectionFiltersBarComponent } from './components/collection-filters-bar/collection-filters-bar.component';
 import { CollectionGridComponent } from './components/collection-grid/collection-grid.component';
+import { PerfumeEditModalComponent } from './components/perfume-edit-modal/perfume-edit-modal.component';
 import { CollectionComponent } from './container/collection.component';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { CollectionComponent } from './container/collection.component';
     CollectionGridComponent,
     CollectionCardComponent,
     CollectionFiltersBarComponent,
+    PerfumeEditModalComponent,
   ],
   exports: [CollectionComponent],
 })

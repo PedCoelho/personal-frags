@@ -72,7 +72,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     );
 
     const sub = this.collectionService
-      .addToCollection(perfume)
+      .addPerfume(perfume)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -97,7 +97,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     (perfume as SearchResult).loading = true;
 
     const sub = this.collectionService
-      .removeFromCollection(perfume.id)
+      .removePerfume(perfume.id)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -114,7 +114,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   public getCollection(): void {
     this.subs.push(
       this.collectionService
-        .getCollection()
+        .getAll()
         .pipe(map((data) => this.collectionSort(data)))
         .subscribe((data) => {
           this.collection = data;

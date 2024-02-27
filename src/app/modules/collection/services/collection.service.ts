@@ -11,13 +11,13 @@ import { HttpService } from '../../shared/services/http.service';
 export class CollectionService {
   constructor(private http: HttpService) {}
 
-  public getCollection(): Observable<UserPerfume[]> {
+  public getAll(): Observable<UserPerfume[]> {
     return this.http.get<UserPerfume[]>(
       `${environment.apiBaseUrl}/frag/perfume/collection`
     );
   }
 
-  public addToCollection(perfume: SearchResult): Observable<any> {
+  public addPerfume(perfume: SearchResult): Observable<any> {
     const payload = {
       name: perfume.naslov,
       id: perfume.id,
@@ -32,9 +32,19 @@ export class CollectionService {
     );
   }
 
-  public removeFromCollection(id: string): Observable<any> {
+  public removePerfume(id: string): Observable<any> {
     return this.http.delete(
-      `${environment.apiBaseUrl}/frag/perfume/delete/${id}`
+      `${environment.apiBaseUrl}/frag/perfume/collection/${id}`
+    );
+  }
+
+  public updatePerfume(
+    id: string,
+    perfume: Partial<UserPerfume>
+  ): Observable<any> {
+    return this.http.put(
+      `${environment.apiBaseUrl}/frag/perfume/collection/${id}`,
+      perfume
     );
   }
 }
