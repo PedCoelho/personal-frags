@@ -117,6 +117,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     );
   }
 
+  public showCollapseAll() {
+    return this.collection.some((perfume) => perfume.showNotes);
+  }
+
   public handleSorting(value: CollectionSortOptions) {
     switch (value) {
       case CollectionSortOptions.COMPANY:

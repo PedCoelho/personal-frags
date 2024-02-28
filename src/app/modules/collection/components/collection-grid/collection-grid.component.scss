@@ -2,20 +2,31 @@
   --collection-grid-columns: 3;
   width: 100%;
 
-  .collection__grid-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(var(--collection-grid-columns), 1fr);
-    gap: var(--spacing-md);
-
-    @media (max-width: 768px) {
-      grid-template-columns: auto;
+  .collection {
+    &__collapse-all {
+      position: fixed;
+      bottom: var(--spacing-lg);
+      right: var(--spacing-lg);
+      @media (max-width: 768px) {
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+      }
     }
+    &__grid-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(var(--collection-grid-columns), 1fr);
+      gap: var(--spacing-md);
 
-    &.cdk-drop-list-dragging {
-      collection-card {
-        &:not(.cdk-drag-placeholder) {
-          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      @media (max-width: 768px) {
+        grid-template-columns: auto;
+      }
+
+      &.cdk-drop-list-dragging {
+        collection-card {
+          &:not(.cdk-drag-placeholder) {
+            transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+          }
         }
       }
     }

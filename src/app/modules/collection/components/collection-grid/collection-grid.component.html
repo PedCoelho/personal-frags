@@ -1,5 +1,5 @@
 <collection-filters-bar [show-clear]="!!getUserSort()" (sorted)="handleSorting($event)"
-    (company-filtered)="handleCompanyFiltering($event)" (filters-cleared)="clearFilters()"></collection-filters-bar>
+    (company-filtered)="handleCompanyFiltering($event)" (filters-cleared)="clearFilters()" />
 <div class="collection__grid-container" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let perfume of collection; trackBy: trackPerfumeBy">
         <collection-card cdkDrag [perfume]="perfume" (remove)="removeFromCollection($event)"
@@ -15,3 +15,5 @@
         </collection-card>
     </ng-container>
 </div>
+<button position="top" matTooltip="Encolher Tudo" class="collection__collapse-all" mat-fab *ngIf="showCollapseAll()"
+    (click)="shrinkCards()"><mat-icon fontIcon="unfold_less"></mat-icon></button>
