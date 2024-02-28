@@ -43,7 +43,6 @@ export class PerfumeEditModalComponent {
       )
     );
     this.perfumeForm.markAsPristine();
-    console.log(this.perfumeForm.value, this.perfumeForm.valid);
   }
 
   public pickTagColor(val: string, i: number) {
@@ -74,6 +73,7 @@ export class PerfumeEditModalComponent {
 
   removeTag(index: number): void {
     this.perfumeForm.controls['user_tags'].removeAt(index);
+    this.perfumeForm.markAsDirty();
   }
 
   editTag(index: number, event: MatChipEditedEvent) {
