@@ -1,5 +1,4 @@
-<collection-filters-bar [show-clear]="!!getUserSort()" (sorted)="handleSorting($event)"
-    (company-filtered)="handleCompanyFiltering($event)" (filters-cleared)="clearFilters()" />
+<button class="m-b-2" mat-button (click)="openFilters()"><mat-icon fontIcon="filter_alt"></mat-icon>Filtros</button>
 <div class="collection__grid-container" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let perfume of collection; trackBy: trackPerfumeBy">
         <collection-card cdkDrag [perfume]="perfume" (updated)="getCollection()" (remove)="removeFromCollection($event)"
@@ -15,5 +14,11 @@
         </collection-card>
     </ng-container>
 </div>
-<button position="top" matTooltip="Encolher Tudo" class="collection__collapse-all" mat-fab *ngIf="showCollapseAll()"
-    (click)="shrinkCards()"><mat-icon fontIcon="unfold_less"></mat-icon></button>
+<div class="flex flow-column collection__quick-actions">
+    <button position="top" matTooltip="Encolher Tudo" mat-fab *ngIf="showCollapseAll()"
+        (click)="shrinkCards()"><mat-icon fontIcon="unfold_less"></mat-icon></button>
+    <button position="top" matTooltip="Limpar Ordem" mat-fab *ngIf="showClearSort()" (click)="clearSorting()"><mat-icon
+            fontIcon="sort_off"></mat-icon></button>
+    <button position="top" matTooltip="Limpar Filtros" mat-fab *ngIf="showClearFilters()"
+        (click)="clearFilters()"><mat-icon fontIcon="filter_alt_off"></mat-icon></button>
+</div>

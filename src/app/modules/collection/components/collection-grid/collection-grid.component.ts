@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Store } from '@ngrx/store';
 import { updateCollection } from 'app/+state/app.actions';
 import { State } from 'app/+state/app.reducers';
@@ -8,6 +9,7 @@ import {
   UserPerfume,
 } from 'app/modules/collection/models/collection.models';
 import { SearchResult } from 'app/modules/shared/components/perfume-search/models/perfume-search.models';
+import { CollectionFiltersService } from 'app/modules/shared/services/collection-filters.service';
 import { NotificationService } from 'app/modules/shared/services/notification.service';
 import { Subscription, finalize, map } from 'rxjs';
 import { CollectionService } from '../../services/collection.service';
@@ -18,13 +20,12 @@ import { CollectionFiltersBarComponent } from '../collection-filters-bar/collect
   styleUrls: ['./collection-grid.component.scss'],
 })
 export class CollectionGridComponent implements OnDestroy, OnInit {
-  @ViewChild(CollectionFiltersBarComponent)
-  filterBar!: CollectionFiltersBarComponent;
-
   constructor(
     private notification: NotificationService,
     private collectionService: CollectionService,
-    private store: Store<State>
+    private collectionFiltersService: CollectionFiltersService,
+    private store: Store<State>,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   public loading = false;
@@ -40,6 +41,25 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
+  public openFilters() {
+    const ref = this.bottomSheet.open(CollectionFiltersBarComponent);
+
+    //todo maybe switch to subscribing to service observables instead
+    const subs = [
+      ref.instance.sorted.subscribe((data) => this.handleSorting(data)),
+      ref.instance.filtersCleared.subscribe(() => this.clearFilters()),
+      ref.instance.filterByCompany.subscribe((data) =>
+        this.handleCompanyFiltering(data)
+      ),
+    ];
+
+    this.subs.push(
+      ref
+        .afterDismissed()
+        .subscribe(() => subs.forEach((sub) => sub.unsubscribe()))
+    );
+  }
+
   public shrinkCards() {
     this.collection.forEach((perfume) => {
       perfume.showNotes = false;
@@ -49,7 +69,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   public drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
-    this.setUserSort();
+    this.setUserSort(this.collection);
   }
 
   public addToCollection(perfume: SearchResult) {
@@ -121,8 +141,20 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     return this.collection.some((perfume) => perfume.showNotes);
   }
 
+  public showClearSort() {
+    //todo could be an observable async pipe
+    return (
+      this.collectionFiltersService.sortMethod !== CollectionSortOptions.COMPANY
+    );
+  }
+
+  public showClearFilters() {
+    //todo could be an observable async pipe
+    return this.collectionFiltersService.currentFilters.length;
+  }
+
   public handleSorting(value: CollectionSortOptions) {
-    this.clearSort();
+    this.clearUserSort();
     let tempCollection = [...this.collection].sort(this.nameSort);
 
     switch (value) {
@@ -148,12 +180,12 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     return this.collection;
   }
 
-  private setUserSort(): void {
+  private setUserSort(val: UserPerfume[]): void {
     localStorage.setItem(
       'collection-sort',
-      this.collection.map((perfume, i) => perfume.id).join(',')
+      val.map((perfume, i) => perfume.id).join(',')
     );
-    this.filterBar.setSortMethod(CollectionSortOptions.CUSTOM);
+    this.collectionFiltersService.sortMethod = CollectionSortOptions.CUSTOM;
   }
 
   public getUserSort(): string[] | undefined {
@@ -162,10 +194,16 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     else return undefined;
   }
 
+  public clearSorting() {
+    this.collectionFiltersService.sortMethod =
+      this.collectionFiltersService.DEFAULT_SORT;
+    this.handleSorting(this.collectionFiltersService.sortMethod);
+  }
+
   public clearFilters() {
-    console.log('clear filters');
     this.collection = this.collectionBackup;
-    this.handleSorting(this.filterBar.sortMethod.value);
+    this.collectionFiltersService.currentFilters = [];
+    this.handleSorting(this.collectionFiltersService.sortMethod);
   }
 
   public handleCompanyFiltering(filters: any) {
@@ -173,7 +211,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
       filters.some((company: string) => perfume.company === company)
     );
 
-    this.handleSorting(this.filterBar.sortMethod.value);
+    this.handleSorting(this.collectionFiltersService.sortMethod);
   }
 
   private companySort = (a: UserPerfume, b: UserPerfume) =>
@@ -197,14 +235,13 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
     return userSort
       ? this.applyUserSort(userSort, data)
-      : this.handleSorting(this.filterBar.sortMethod.value);
+      : this.handleSorting(this.collectionFiltersService.sortMethod);
   }
 
   private applyUserSort(
     userSort: string[],
     initialSort: UserPerfume[]
   ): UserPerfume[] {
-    this.filterBar.setSortMethod(CollectionSortOptions.CUSTOM);
     const initialSortCopy = [...initialSort];
     initialSortCopy.forEach((perfume) => {
       const userSortIndex = userSort.indexOf(perfume.id);
@@ -216,10 +253,12 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
         );
     });
 
+    this.setUserSort(initialSort);
+
     return initialSort;
   }
 
-  private clearSort() {
+  private clearUserSort() {
     localStorage.removeItem('collection-sort');
   }
 }
