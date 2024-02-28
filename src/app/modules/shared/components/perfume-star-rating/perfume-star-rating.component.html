@@ -1,0 +1,4 @@
+<div class="flex rating-wrapper align-items-center" [title]="'Nota: ' + rating">
+    <img *ngFor="let star of starArray" src="./assets/icons/star.svg" />
+    <ng-content></ng-content>
+</div>

@@ -122,16 +122,30 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
 
   public handleSorting(value: CollectionSortOptions) {
+    this.clearSort();
+    let tempCollection = [...this.collection].sort(this.nameSort);
+
     switch (value) {
       case CollectionSortOptions.COMPANY:
-        this.clearSort();
-        this.collection = this.collectionSort(this.collection);
+        tempCollection = tempCollection.sort(this.companySort);
         break;
       case CollectionSortOptions.PERFUME:
-        this.clearSort();
-        this.collection = this.collection.sort(this.nameSort);
+        tempCollection = tempCollection.sort(this.nameSort);
+        break;
+      case CollectionSortOptions.PRICE:
+        tempCollection = tempCollection.sort(this.priceSort);
+        break;
+      case CollectionSortOptions.USER_RATING:
+        tempCollection = tempCollection.sort(this.userRatingSort);
+        break;
+      case CollectionSortOptions.FRAGRANTICA_RATING:
+        tempCollection = tempCollection.sort(this.ratingSort);
         break;
     }
+
+    this.collection = tempCollection;
+
+    return this.collection;
   }
 
   private setUserSort(): void {
@@ -151,6 +165,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   public clearFilters() {
     console.log('clear filters');
     this.collection = this.collectionBackup;
+    this.handleSorting(this.filterBar.sortMethod.value);
   }
 
   public handleCompanyFiltering(filters: any) {
@@ -167,12 +182,22 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   private nameSort = (a: UserPerfume, b: UserPerfume) =>
     b.name > a.name ? -1 : 1;
 
-  private collectionSort(data: UserPerfume[]): UserPerfume[] {
-    const initialSort = data.sort(this.nameSort).sort(this.companySort);
+  private priceSort = (a: UserPerfume, b: UserPerfume) =>
+    (b.user_price ?? 0) >= (a.user_price ?? 0) ? 1 : -1;
 
+  private ratingSort = (a: UserPerfume, b: UserPerfume) =>
+    b.rating >= a.rating ? 1 : -1;
+
+  private userRatingSort = (a: UserPerfume, b: UserPerfume) =>
+    (b.user_rating ?? 0) >= (a.user_rating ?? 0) ? 1 : -1;
+
+  private collectionSort(data: UserPerfume[]): UserPerfume[] {
+    this.collection = data;
     const userSort = this.getUserSort();
 
-    return userSort ? this.applyUserSort(userSort, initialSort) : initialSort;
+    return userSort
+      ? this.applyUserSort(userSort, data)
+      : this.handleSorting(this.filterBar.sortMethod.value);
   }
 
   private applyUserSort(

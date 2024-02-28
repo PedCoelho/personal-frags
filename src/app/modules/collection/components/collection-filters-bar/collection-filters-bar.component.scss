@@ -4,6 +4,19 @@
 
   @media (max-width: 768px) {
     justify-content: center;
+    align-items: flex-start;
     flex-flow: column;
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      button {
+        margin: unset;
+      }
+    }
+    .filters {
+      flex-direction: row-reverse;
+    }
   }
 }

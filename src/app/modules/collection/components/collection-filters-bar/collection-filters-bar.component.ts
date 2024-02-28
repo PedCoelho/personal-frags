@@ -20,19 +20,23 @@ import {
   styleUrls: ['./collection-filters-bar.component.scss'],
 })
 export class CollectionFiltersBarComponent implements OnDestroy {
-  @Input('show-clear') clearEnabled = false;
+  @Input('show-clear') clearSortEnabled = false;
   @Output() sorted = new EventEmitter<CollectionSortOptions>();
   @Output('company-filtered') filterByCompany = new EventEmitter<string[]>();
   @Output('filters-cleared') filtersCleared = new EventEmitter();
 
+  public clearFiltersEnabled: boolean = false;
+
   public readonly subs: Subscription[] = [];
 
+  //review currently unused
   public readonly filterOptions: {
     label: string;
     value: CollectionFilterOptions;
   }[] = [
     { label: 'Empresa', value: CollectionFilterOptions.COMPANY },
     { label: 'Perfume', value: CollectionFilterOptions.PERFUME },
+    { label: 'Perfumista', value: CollectionFilterOptions.PERFUME },
   ];
 
   public readonly sortOptions: {
@@ -42,6 +46,12 @@ export class CollectionFiltersBarComponent implements OnDestroy {
   }[] = [
     { label: 'Empresa', value: CollectionSortOptions.COMPANY },
     { label: 'Perfume', value: CollectionSortOptions.PERFUME },
+    { label: 'Preço', value: CollectionSortOptions.PRICE },
+    {
+      label: 'Nota Fragrantica',
+      value: CollectionSortOptions.FRAGRANTICA_RATING,
+    },
+    { label: 'Nota Usuário', value: CollectionSortOptions.USER_RATING },
     {
       label: 'Customizada',
       value: CollectionSortOptions.CUSTOM,
@@ -88,8 +98,13 @@ export class CollectionFiltersBarComponent implements OnDestroy {
 
     this.subs.push(
       this.companyFilter.valueChanges.subscribe((val) => {
-        if (val.length) this.filterByCompany.emit(val);
-        else this.filtersCleared.emit();
+        if (val.length) {
+          this.filterByCompany.emit(val);
+          this.clearFiltersEnabled = true;
+        } else {
+          this.filtersCleared.emit();
+          this.clearFiltersEnabled = false;
+        }
       })
     );
   }

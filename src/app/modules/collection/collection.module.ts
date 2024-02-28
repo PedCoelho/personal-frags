@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxColorsModule } from 'ngx-colors';
 import { PerfumeSearchModule } from '../shared/components/perfume-search/perfume-search.module';
+import { PerfumeStarRatingComponent } from '../shared/components/perfume-star-rating/perfume-star-rating.component';
 import { MaterialModule } from '../shared/material.module';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionCardComponent } from './components/collection-card/collection-card.component';
@@ -18,6 +19,7 @@ import { CollectionComponent } from './container/collection.component';
     MaterialModule,
     PerfumeSearchModule,
     NgxColorsModule,
+    PerfumeStarRatingComponent,
   ],
   declarations: [
     CollectionComponent,

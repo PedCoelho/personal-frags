@@ -2,12 +2,15 @@ export enum CollectionSortOptions {
   CUSTOM,
   COMPANY,
   PERFUME,
-  // PRICE,
+  PRICE,
+  USER_RATING,
+  FRAGRANTICA_RATING,
 }
 
 export enum CollectionFilterOptions {
   COMPANY,
   PERFUME,
+  PERFUMER,
 }
 
 export interface UserPerfume {

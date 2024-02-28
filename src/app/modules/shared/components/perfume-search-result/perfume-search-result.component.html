@@ -13,12 +13,12 @@
                     }})</small>
             </h4>
         </div>
-        <div class="flex result__rating-wrapper align-items-center" [title]="'Nota: ' + perfume.rating.toFixed(2)">
-            <img *ngFor="let star of arrayFromRating(perfume.rating_rounded)" src="./assets/icons/star.svg" />
+        <perfume-star-rating [rating]="perfume.rating_rounded">
             <small class="m-l-1">({{ perfume.num_komentara }})</small>
-        </div>
-        <mat-chip *ngIf="perfume.saved" class="m-t-1" color="accent">
-            <mat-icon matChipAvatar fontIcon="check" />
-            Salvo
-        </mat-chip>
+        </perfume-star-rating>
     </div>
+    <mat-chip *ngIf="perfume.saved" class="m-t-1" color="accent">
+        <mat-icon matChipAvatar fontIcon="check" />
+        Salvo
+    </mat-chip>
+</div>

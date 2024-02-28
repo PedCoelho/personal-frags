@@ -10,8 +10,4 @@ export class PerfumeSearchResultComponent {
   @Input() perfume?: SearchResult;
   @Output('action-triggered') actionTriggered =
     new EventEmitter<SearchResult>();
-
-  public arrayFromRating(rating: number) {
-    return new Array(rating);
-  }
 }

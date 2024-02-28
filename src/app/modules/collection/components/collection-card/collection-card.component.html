@@ -1,19 +1,28 @@
 <mat-card class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
-    <mat-card-header (click)="perfume.showNotes = !perfume.showNotes">
-        <section>
-            <img mat-card-avatar src="{{ perfume.thumbnail }}" />
-            <mat-card-subtitle>{{ perfume.name }} <small>({{perfume.company}} |
-                    {{perfume.perfumers ? (perfume.perfumers | propsToString:"name" )+ " | " :""}}
-                    {{perfume.rating.toFixed(2)}}) </small></mat-card-subtitle>
-        </section>
-        <section *ngIf="perfume.user_tags?.length">
+    <div (click)="perfume.showNotes = !perfume.showNotes">
+        <mat-card-header>
+            <section>
+                <img mat-card-avatar src="{{ perfume.thumbnail }}" />
+                <mat-card-subtitle>{{ perfume.name }}<br><small>({{perfume.company}}{{perfume.user_price ? " | " +
+                        (perfume.user_price | currency:'BRL')
+                        :""}})
+                    </small>
+                    <br>
+                    <div *ngIf="perfume.user_rating" class="m-t-1">
+                        <perfume-star-rating [rating]="perfume.user_rating" />
+                    </div>
+                </mat-card-subtitle>
+            </section>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <section class="p-y-2 p-x-3" *ngIf="perfume.user_tags?.length">
             <mat-chip-set>
                 <mat-chip *ngFor="let tag of perfume.user_tags;trackBy:trackTag"
                     [ngStyle]="{background:tag.color}">{{tag.label}}</mat-chip>
             </mat-chip-set>
         </section>
-    </mat-card-header>
+    </div>
     <mat-divider *ngIf=" perfume.showNotes || perfume.showAccords" />
     <mat-accordion [@.disabled]="true" multi displayMode="flat"
         *ngIf=" perfume.showNotes || perfume.showAccords;trackChord">
@@ -88,7 +97,6 @@
             </ng-template>
         </mat-expansion-panel>
     </mat-accordion>
-
     <mat-divider />
     <mat-card-actions class="flex justify-content-space-between">
         <div>
@@ -106,7 +114,6 @@
                 (click)="removeActionClicked.emit(perfume)">
                 <mat-icon fontIcon="delete" />
             </button>
-
         </div>
     </mat-card-actions>
     <mat-card-footer>
