@@ -1,4 +1,4 @@
-<mat-card *ngIf="perfume" tabindex="0" class="user__perfume">
+<mat-card class="user__perfume">
     <ng-content select="[drag-handle]"></ng-content>
     <mat-card-header (click)="perfume.showNotes = !perfume.showNotes">
         <section>
@@ -9,13 +9,14 @@
         </section>
         <section *ngIf="perfume.user_tags?.length">
             <mat-chip-set>
-                <mat-chip *ngFor="let tag of perfume.user_tags"
+                <mat-chip *ngFor="let tag of perfume.user_tags;trackBy:trackTag"
                     [ngStyle]="{background:tag.color}">{{tag.label}}</mat-chip>
             </mat-chip-set>
         </section>
     </mat-card-header>
     <mat-divider *ngIf=" perfume.showNotes || perfume.showAccords" />
-    <mat-accordion multi displayMode="flat" *ngIf=" perfume.showNotes || perfume.showAccords">
+    <mat-accordion [@.disabled]="true" multi displayMode="flat"
+        *ngIf=" perfume.showNotes || perfume.showAccords;trackChord">
         <mat-divider />
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -26,7 +27,24 @@
                     <mat-icon>yard</mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <ng-container *ngTemplateOutlet="notes; context:{$implicit:perfume.notes}"></ng-container>
+            <ng-template matExpansionPanelContent>
+                <div class="notes__wrapper">
+                    <div class="notes__group m-b-2" *ngFor="let tuple of perfumeNotes">
+                        <p>{{tuple[0]}}</p>
+                        <div class="notes__grid">
+                            <div class="notes__note-body" [matTooltip]="note.name"
+                                *ngFor="let note of tuple[1];trackBy:trackNote">
+                                <a [href]="note.link" target="_blank">
+                                    <img [title]="note.name" src="{{note.image}}" />
+                                    <div class="notes__note-name">
+                                        <small>{{note.name}}</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
         </mat-expansion-panel>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -37,7 +55,15 @@
                     <mat-icon>bar_chart</mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <ng-container *ngTemplateOutlet="accords; context:{$implicit:perfume.accords}"></ng-container>
+            <ng-template matExpansionPanelContent>
+                <div class="accords__wrapper">
+                    <ng-container *ngFor="let accord of perfume.accords">
+                        <small class='accords__entry'
+                            [ngStyle]=" {background:accord.background,width:accord.width}">{{accord.name}}
+                        </small>
+                    </ng-container>
+                </div>
+            </ng-template>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="perfume.perfumers?.length">
             <mat-expansion-panel-header>
@@ -48,7 +74,18 @@
                     <mat-icon>people</mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <ng-container *ngTemplateOutlet="perfumers; context:{$implicit:perfume.perfumers}"></ng-container>
+            <ng-template matExpansionPanelContent>
+                <div class="perfumers__wrapper">
+                    <div class="flex align-items-center m-b-1" *ngFor="let perfumer of perfume.perfumers">
+                        <img class="m-b-0" mat-card-avatar [src]="perfumer.image">
+                        <a class="w-100 m-l-3" [href]="'https://fragrantica.com.br/'+perfumer.url" target="_blank">
+                            <small>
+                                {{perfumer.name}}
+                            </small>
+                        </a>
+                    </div>
+                </div>
+            </ng-template>
         </mat-expansion-panel>
     </mat-accordion>
 
@@ -76,44 +113,3 @@
         <mat-progress-bar *ngIf="perfume.loading" mode="indeterminate"></mat-progress-bar>
     </mat-card-footer>
 </mat-card>
-
-
-<ng-template #notes let-notes>
-    <div class="notes__wrapper">
-        <div class="notes__group m-b-2" *ngFor="let entry of notes | keyvalue | reverse">
-            <p>{{entry.key}}</p>
-            <div class="notes__grid">
-                <div class="notes__note-body" [matTooltip]="note.name" *ngFor="let note of $any(entry.value)">
-                    <a [href]="note.link" target="_blank">
-                        <img [title]="note.name" src="{{note.image}}" />
-                        <div class="notes__note-name">
-                            <small>{{note.name}}</small>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
-
-<ng-template #accords let-accords>
-    <div class="accords__wrapper">
-        <ng-container *ngFor="let accord of accords">
-            <small class='accords__entry' [ngStyle]=" {background:accord.background,width:accord.width}">{{accord.name}}
-            </small>
-        </ng-container>
-    </div>
-</ng-template>
-
-<ng-template #perfumers let-perfumers>
-    <div class="perfumers__wrapper">
-        <div class="flex align-items-center" *ngFor="let perfumer of perfumers">
-            <img class="m-b-0" mat-card-avatar [src]="perfumer.image">
-            <a class="w-100 m-l-3" [href]="'https://fragrantica.com.br/'+perfumer.url" target="_blank">
-                <small>
-                    {{perfumer.name}}
-                </small>
-            </a>
-        </div>
-    </div>
-</ng-template>

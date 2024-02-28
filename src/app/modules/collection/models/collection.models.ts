@@ -49,7 +49,7 @@ export interface PerfumeTag {
 }
 
 export interface PerfumeNote {
-  name?: string;
+  name: string;
   image?: string;
   link?: string;
 }
@@ -57,4 +57,5 @@ export interface PerfumeNote {
 export interface PerfumeAccord {
   name: string;
   background: string;
+  width: string;
 }

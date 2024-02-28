@@ -36,7 +36,7 @@ mat-chip-set {
   }
 }
 
-mat-accordion:ng-deep {
+mat-accordion {
   padding: var(--spacing-xs);
 
   .mat-expansion-panel-body {
@@ -46,15 +46,11 @@ mat-accordion:ng-deep {
   }
 }
 .mat-expansion-panel {
+  background-color: white;
   margin-bottom: 2px;
 
   &-header {
     padding: 0 16px;
-    &.mat-expanded {
-      height: calc(
-        var(--mat-expansion-header-collapsed-state-height) + var(--spacing-sm)
-      );
-    }
 
     &-description {
       justify-content: flex-end;
