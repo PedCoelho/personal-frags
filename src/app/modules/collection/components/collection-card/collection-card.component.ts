@@ -33,6 +33,7 @@ export class CollectionCardComponent implements OnInit, OnDestroy {
 
   @Input() perfume!: UserPerfume;
   @Output('remove') removeActionClicked = new EventEmitter<UserPerfume>();
+  @Output('updated') updated = new EventEmitter();
 
   public perfumeNotes: Array<[string, PerfumeNote[]]> = [];
 
@@ -93,6 +94,7 @@ export class CollectionCardComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.notification.success('Perfume atualizado com sucesso');
         this.perfume = { ...this.perfume, ...value };
+        this.updated.emit();
       });
     this.subs.push(sub);
   }

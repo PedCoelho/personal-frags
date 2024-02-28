@@ -16,9 +16,9 @@
         <perfume-star-rating [rating]="perfume.rating_rounded">
             <small class="m-l-1">({{ perfume.num_komentara }})</small>
         </perfume-star-rating>
+        <mat-chip *ngIf="perfume.saved" class="m-t-1" color="accent">
+            <mat-icon matChipAvatar fontIcon="check" />
+            Salvo
+        </mat-chip>
     </div>
-    <mat-chip *ngIf="perfume.saved" class="m-t-1" color="accent">
-        <mat-icon matChipAvatar fontIcon="check" />
-        Salvo
-    </mat-chip>
 </div>
