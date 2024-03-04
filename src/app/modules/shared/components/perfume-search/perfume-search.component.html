@@ -2,7 +2,7 @@
   <mat-form-field subscriptSizing="dynamic" class="w-100">
     <mat-label>Busca</mat-label>
     <div class="flex align-items-center">
-      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes" />
+      <input [formControl]="searchBar" matInput placeholder="Ex. Terre d`Hermes" (focusin)="showResults = true" />
     </div>
   </mat-form-field>
   <div *ngIf="loading || (results.length && showResults)" class="scrolling-results" [attr.disabled]="loading">

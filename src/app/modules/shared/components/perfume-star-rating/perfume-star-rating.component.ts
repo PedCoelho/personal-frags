@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -8,16 +8,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./perfume-star-rating.component.scss'],
   imports: [NgFor],
 })
-export class PerfumeStarRatingComponent implements OnInit {
-  @Input() rating: number = 0;
+export class PerfumeStarRatingComponent {
+  @Input()
+  set rating(val: number) {
+    this.starArray = this.arrayFromRating(val);
+  }
 
   public starArray: any[] = [];
 
-  ngOnInit(): void {
-    this.starArray = this.arrayFromRating();
-  }
+  ngOnInit(): void {}
 
-  public arrayFromRating() {
-    return new Array(this.rating);
+  public arrayFromRating(val: number) {
+    return new Array(val);
   }
 }
