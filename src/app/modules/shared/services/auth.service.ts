@@ -8,17 +8,19 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
   public storageTokenPrefix: string = 'personal-frags-token';
 
   public user$: Observable<User | null>;
-  public isLoggedIn: boolean = Boolean(this.getTokenOnStorage());
+  public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public userSubscription: Subscription;
 
   constructor(public auth: Auth, private router: Router) {
+    this.initializeLoggedInState();
+
     this.user$ = user(this.auth as any);
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       console.log(aUser);
@@ -27,10 +29,15 @@ export class AuthService implements OnDestroy {
       if (aUser?.accessToken) {
         //@ts-ignore
         this.setTokenOnStorage(aUser?.accessToken);
+        this.loggedIn$.next(true);
       } else {
         this.clearToken();
       }
     });
+  }
+
+  private initializeLoggedInState() {
+    this.loggedIn$.next(this.getTokenOnStorage() ? true : false);
   }
 
   ngOnDestroy(): void {
@@ -69,6 +76,7 @@ export class AuthService implements OnDestroy {
   }
 
   public clearToken() {
+    this.loggedIn$.next(false);
     return localStorage.removeItem(this.storageTokenPrefix);
   }
 }

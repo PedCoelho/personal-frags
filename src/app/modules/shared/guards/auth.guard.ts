@@ -1,27 +1,36 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from 'app/modules/shared/services/auth.service';
+import { Observable, map } from 'rxjs';
 
-export const authGuard: CanActivateFn = (): boolean => {
+export const authGuard: CanActivateFn = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return true;
-  } else {
-    router.navigateByUrl('/login');
-    return false;
-  }
+  return authService.loggedIn$.pipe(
+    map((loggedIn) => {
+      if (loggedIn) {
+        return true;
+      } else {
+        router.navigateByUrl('/login');
+        return false;
+      }
+    })
+  );
 };
 
-export const loginGuard: CanActivateFn = (): boolean => {
+export const loginGuard: CanActivateFn = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  console.log('login guard', authService.isAuthenticated());
+  return authService.loggedIn$.pipe(
+    map((loggedIn) => {
+      console.log('login guard', loggedIn);
 
-  if (authService.isAuthenticated()) {
-    router.navigateByUrl('/');
-    return false;
-  } else return true;
+      if (loggedIn) {
+        router.navigateByUrl('/');
+        return false;
+      } else return true;
+    })
+  );
 };
