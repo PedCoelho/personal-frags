@@ -47,10 +47,11 @@ export class AuthService implements OnDestroy {
   public signIn() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(this.auth, provider).then((result) => {
+      console.log(result);
       if (result.user) {
         //@ts-ignore
         this.setTokenOnStorage(result.user.accessToken);
-        this.router.navigate(['/']);
+        setTimeout(() => this.router.navigate(['/']), 500);
       }
     });
   }
