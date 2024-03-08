@@ -1,0 +1,737 @@
+[
+  {
+    "source": 0,
+    "target": 1,
+    "notes": ["Vetiver", "Cedro"]
+  },
+  {
+    "source": 0,
+    "target": 2,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 0,
+    "target": 3,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 0,
+    "target": 5,
+    "notes": ["Patchouli", "Cedro"]
+  },
+  {
+    "source": 0,
+    "target": 8,
+    "notes": ["Patchouli", "Vetiver"]
+  },
+  {
+    "source": 0,
+    "target": 10,
+    "notes": ["Benjoim", "Cedro", "Vetiver"]
+  },
+  {
+    "source": 0,
+    "target": 11,
+    "notes": ["Vetiver", "Toranja"]
+  },
+  {
+    "source": 0,
+    "target": 13,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 0,
+    "target": 15,
+    "notes": ["Cedro", "Patchouli"]
+  },
+  {
+    "source": 0,
+    "target": 16,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 0,
+    "target": 17,
+    "notes": ["Benjoim"]
+  },
+  {
+    "source": 0,
+    "target": 18,
+    "notes": ["Benjoim", "Toranja"]
+  },
+  {
+    "source": 0,
+    "target": 19,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 0,
+    "target": 20,
+    "notes": ["Benjoim"]
+  },
+  {
+    "source": 1,
+    "target": 2,
+    "notes": ["Almíscar"]
+  },
+  {
+    "source": 1,
+    "target": 3,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 1,
+    "target": 4,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 1,
+    "target": 5,
+    "notes": ["Âmbar", "Cedro"]
+  },
+  {
+    "source": 1,
+    "target": 6,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 1,
+    "target": 7,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 1,
+    "target": 8,
+    "notes": ["Fava Tonka", "Vetiver"]
+  },
+  {
+    "source": 1,
+    "target": 9,
+    "notes": ["Fava Tonka", "Âmbar"]
+  },
+  {
+    "source": 1,
+    "target": 10,
+    "notes": ["Cedro", "Vetiver"]
+  },
+  {
+    "source": 1,
+    "target": 11,
+    "notes": ["Vetiver", "Chá"]
+  },
+  {
+    "source": 1,
+    "target": 12,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 1,
+    "target": 13,
+    "notes": ["Almíscar", "Âmbar"]
+  },
+  {
+    "source": 1,
+    "target": 15,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 1,
+    "target": 16,
+    "notes": ["Fava Tonka", "Cedro"]
+  },
+  {
+    "source": 1,
+    "target": 17,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 1,
+    "target": 18,
+    "notes": ["Âmbar", "Fava Tonka"]
+  },
+  {
+    "source": 2,
+    "target": 3,
+    "notes": ["Sândalo", "Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 4,
+    "notes": ["Jasmim"]
+  },
+  {
+    "source": 2,
+    "target": 5,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 2,
+    "target": 6,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 7,
+    "notes": ["Tabaco"]
+  },
+  {
+    "source": 2,
+    "target": 8,
+    "notes": ["Tabaco", "Patchouli"]
+  },
+  {
+    "source": 2,
+    "target": 13,
+    "notes": ["Almíscar", "Patchouli", "Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 14,
+    "notes": ["Cedro da Virgínia", "Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 15,
+    "notes": ["Patchouli", "Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 16,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 17,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 18,
+    "notes": ["Ameixa"]
+  },
+  {
+    "source": 2,
+    "target": 19,
+    "notes": ["Patchouli", "Gerânio", "Bergamota"]
+  },
+  {
+    "source": 2,
+    "target": 20,
+    "notes": ["Sândalo", "Abacaxi"]
+  },
+  {
+    "source": 3,
+    "target": 4,
+    "notes": ["Couro"]
+  },
+  {
+    "source": 3,
+    "target": 5,
+    "notes": ["Couro", "Cedro"]
+  },
+  {
+    "source": 3,
+    "target": 6,
+    "notes": ["Baunilha", "Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 7,
+    "notes": ["Baunilha", "Notas Especiadas"]
+  },
+  {
+    "source": 3,
+    "target": 10,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 3,
+    "target": 11,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 3,
+    "target": 13,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 14,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 15,
+    "notes": ["Cedro", "Musgo", "Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 16,
+    "notes": ["Cedro", "Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 17,
+    "notes": ["Baunilha", "Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 18,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 3,
+    "target": 19,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 3,
+    "target": 20,
+    "notes": ["Baunilha", "Sândalo", "Musgo"]
+  },
+  {
+    "source": 4,
+    "target": 5,
+    "notes": ["Couro", "Âmbar", "Açafrão"]
+  },
+  {
+    "source": 4,
+    "target": 7,
+    "notes": ["Notas Amadeiradas"]
+  },
+  {
+    "source": 4,
+    "target": 8,
+    "notes": ["Artemísia"]
+  },
+  {
+    "source": 4,
+    "target": 9,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 4,
+    "target": 12,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 4,
+    "target": 13,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 4,
+    "target": 18,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 4,
+    "target": 19,
+    "notes": ["Olíbano"]
+  },
+  {
+    "source": 5,
+    "target": 8,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 5,
+    "target": 9,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 5,
+    "target": 10,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 5,
+    "target": 12,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 5,
+    "target": 13,
+    "notes": ["Patchouli", "Âmbar"]
+  },
+  {
+    "source": 5,
+    "target": 15,
+    "notes": ["Cedro", "Patchouli"]
+  },
+  {
+    "source": 5,
+    "target": 16,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 5,
+    "target": 18,
+    "notes": ["Âmbar", "Agarwood (Oud)"]
+  },
+  {
+    "source": 5,
+    "target": 19,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 6,
+    "target": 7,
+    "notes": ["Mel", "Baunilha", "Fava Tonka"]
+  },
+  {
+    "source": 6,
+    "target": 8,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 6,
+    "target": 9,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 6,
+    "target": 11,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 6,
+    "target": 12,
+    "notes": ["Cashmeran"]
+  },
+  {
+    "source": 6,
+    "target": 13,
+    "notes": ["Lavanda", "Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 14,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 15,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 16,
+    "notes": ["Fava Tonka", "Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 17,
+    "notes": ["Baunilha", "Fava Tonka", "Canela", "Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 18,
+    "notes": ["Baunilha", "Fava Tonka"]
+  },
+  {
+    "source": 6,
+    "target": 19,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 6,
+    "target": 20,
+    "notes": ["Baunilha", "Cashmeran", "Canela"]
+  },
+  {
+    "source": 7,
+    "target": 8,
+    "notes": ["Fava Tonka", "Tabaco"]
+  },
+  {
+    "source": 7,
+    "target": 9,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 7,
+    "target": 11,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 7,
+    "target": 16,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 7,
+    "target": 17,
+    "notes": ["Baunilha", "Fava Tonka"]
+  },
+  {
+    "source": 7,
+    "target": 18,
+    "notes": ["Baunilha", "Fava Tonka"]
+  },
+  {
+    "source": 7,
+    "target": 20,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 8,
+    "target": 9,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 8,
+    "target": 10,
+    "notes": ["Vetiver"]
+  },
+  {
+    "source": 8,
+    "target": 11,
+    "notes": ["Vetiver"]
+  },
+  {
+    "source": 8,
+    "target": 13,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 8,
+    "target": 15,
+    "notes": ["Patchouli", "Gengibre"]
+  },
+  {
+    "source": 8,
+    "target": 16,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 8,
+    "target": 17,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 8,
+    "target": 18,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 8,
+    "target": 19,
+    "notes": ["Patchouli"]
+  },
+  {
+    "source": 9,
+    "target": 12,
+    "notes": ["Âmbar", "Notas Oceânicas"]
+  },
+  {
+    "source": 9,
+    "target": 13,
+    "notes": ["Âmbar", "Notas Oceânicas"]
+  },
+  {
+    "source": 9,
+    "target": 16,
+    "notes": ["Fava Tonka", "Sálvia Esclaréia"]
+  },
+  {
+    "source": 9,
+    "target": 17,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 9,
+    "target": 18,
+    "notes": ["Âmbar", "Fava Tonka"]
+  },
+  {
+    "source": 9,
+    "target": 19,
+    "notes": ["Sálvia Esclaréia"]
+  },
+  {
+    "source": 10,
+    "target": 11,
+    "notes": ["Vetiver"]
+  },
+  {
+    "source": 10,
+    "target": 13,
+    "notes": ["Cipreste"]
+  },
+  {
+    "source": 10,
+    "target": 15,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 10,
+    "target": 16,
+    "notes": ["Cedro"]
+  },
+  {
+    "source": 10,
+    "target": 17,
+    "notes": ["Benjoim"]
+  },
+  {
+    "source": 10,
+    "target": 18,
+    "notes": ["Benjoim"]
+  },
+  {
+    "source": 10,
+    "target": 20,
+    "notes": ["Benjoim"]
+  },
+  {
+    "source": 11,
+    "target": 15,
+    "notes": ["Cardamomo"]
+  },
+  {
+    "source": 11,
+    "target": 17,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 11,
+    "target": 18,
+    "notes": ["Baunilha", "Toranja"]
+  },
+  {
+    "source": 11,
+    "target": 20,
+    "notes": ["Baunilha"]
+  },
+  {
+    "source": 12,
+    "target": 13,
+    "notes": ["Âmbar", "Notas Oceânicas", "Mandarina Verde"]
+  },
+  {
+    "source": 12,
+    "target": 18,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 12,
+    "target": 20,
+    "notes": ["Cashmeran"]
+  },
+  {
+    "source": 13,
+    "target": 14,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 13,
+    "target": 15,
+    "notes": ["Patchouli", "Bergamota"]
+  },
+  {
+    "source": 13,
+    "target": 16,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 13,
+    "target": 17,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 13,
+    "target": 18,
+    "notes": ["Âmbar"]
+  },
+  {
+    "source": 13,
+    "target": 19,
+    "notes": ["Patchouli", "Alecrim", "Bergamota"]
+  },
+  {
+    "source": 14,
+    "target": 15,
+    "notes": ["Pimenta Preta", "Bergamota"]
+  },
+  {
+    "source": 14,
+    "target": 16,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 14,
+    "target": 17,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 14,
+    "target": 19,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 14,
+    "target": 20,
+    "notes": ["Pimenta Preta"]
+  },
+  {
+    "source": 15,
+    "target": 16,
+    "notes": ["Cedro", "Bergamota"]
+  },
+  {
+    "source": 15,
+    "target": 17,
+    "notes": ["Madeira de Âmbar", "Bergamota"]
+  },
+  {
+    "source": 15,
+    "target": 18,
+    "notes": ["Ládano"]
+  },
+  {
+    "source": 15,
+    "target": 19,
+    "notes": ["Patchouli", "Bergamota"]
+  },
+  {
+    "source": 15,
+    "target": 20,
+    "notes": ["Musgo", "Pimenta Preta"]
+  },
+  {
+    "source": 16,
+    "target": 17,
+    "notes": ["Fava Tonka", "Bergamota"]
+  },
+  {
+    "source": 16,
+    "target": 18,
+    "notes": ["Fava Tonka"]
+  },
+  {
+    "source": 16,
+    "target": 19,
+    "notes": ["Sálvia Esclaréia", "Bergamota"]
+  },
+  {
+    "source": 17,
+    "target": 18,
+    "notes": ["Benjoim", "Baunilha", "Fava Tonka"]
+  },
+  {
+    "source": 17,
+    "target": 19,
+    "notes": ["Bergamota"]
+  },
+  {
+    "source": 17,
+    "target": 20,
+    "notes": ["Baunilha", "Canela", "Benjoim"]
+  },
+  {
+    "source": 18,
+    "target": 20,
+    "notes": ["Baunilha", "Benjoim"]
+  }
+]

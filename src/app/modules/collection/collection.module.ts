@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxColorsModule } from 'ngx-colors';
+import { PerfumeGraphModule } from '../perfume-graph/perfume-graph.module';
 import { PerfumeSearchModule } from '../shared/components/perfume-search/perfume-search.module';
 import { PerfumeStarRatingComponent } from '../shared/components/perfume-star-rating/perfume-star-rating.component';
 import { MaterialModule } from '../shared/material.module';
@@ -14,11 +15,12 @@ import { CollectionComponent } from './container/collection.component';
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     CollectionRoutingModule,
+    ReactiveFormsModule,
+    NgxColorsModule,
     MaterialModule,
     PerfumeSearchModule,
-    NgxColorsModule,
+    PerfumeGraphModule,
     PerfumeStarRatingComponent,
   ],
   declarations: [
