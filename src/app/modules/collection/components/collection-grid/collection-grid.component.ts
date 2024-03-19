@@ -36,6 +36,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.getCollection();
+    this.getUserTags();
   }
 
   ngOnDestroy(): void {
@@ -72,11 +73,8 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
       .subscribe(() => subs.forEach((sub) => sub.unsubscribe()));
   }
 
-    this.subs.push(
-      ref
-        .afterDismissed()
-        .subscribe(() => subs.forEach((sub) => sub.unsubscribe()))
-    );
+  public openTags() {
+    throw new Error('Function not implemented.');
   }
 
   public shrinkCards() {
@@ -139,6 +137,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
         this.getCollection();
       });
     this.subs.push(sub);
+  }
+
+  public getUserTags(): void {
+    // this.subs.push(this.collectionService.getTags().subscribe(console.log));
   }
 
   public getCollection(): void {
