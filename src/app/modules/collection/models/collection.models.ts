@@ -33,6 +33,7 @@ export interface UserPerfume {
 
 export enum OwnershipStatus {
   OWNED = 'owned',
+  DECANT = 'decant',
   WANTED = 'wanted',
   PREVIOUSLY_OWNED = 'previously-owned',
 }
@@ -41,9 +42,10 @@ export const ownershipStatusOptions: {
   label: string;
   value: OwnershipStatus;
 }[] = [
-  { label: 'Tenho', value: OwnershipStatus.OWNED },
-  { label: 'Tive', value: OwnershipStatus.PREVIOUSLY_OWNED },
   { label: 'Quero', value: OwnershipStatus.WANTED },
+  { label: 'Tive', value: OwnershipStatus.PREVIOUSLY_OWNED },
+  { label: 'Decant', value: OwnershipStatus.DECANT },
+  { label: 'Tenho', value: OwnershipStatus.OWNED },
 ];
 
 export interface PerfumeTag {
