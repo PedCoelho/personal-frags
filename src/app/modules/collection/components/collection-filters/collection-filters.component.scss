@@ -1,0 +1,10 @@
+:host {
+  mat-form-field {
+    width: 100%;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}

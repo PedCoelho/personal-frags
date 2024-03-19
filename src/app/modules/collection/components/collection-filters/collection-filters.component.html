@@ -17,26 +17,10 @@
                 <mat-option *ngFor=" let company of companyOptions" [value]="company">{{company}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button color="secondary" class="m-l-3" mat-button (click)="companyFilter.setValue([])"
+        <button color="secondary" class="m-t-2" mat-button (click)="companyFilter.setValue([])"
             *ngIf="clearFiltersEnabled">
-            <mat-icon fontIcon="filter_alt_off"></mat-icon>limpar
+            <mat-icon fontIcon="filter_alt_off"></mat-icon>
+            limpar
         </button>
     </div>
-    <div class="m-y-2 flex align-items-center">
-        <mat-icon class="m-r-2" fontIcon="sort" />
-        <h2 class="m-b-0">Ordenar</h2>
-    </div>
-    <div class="sort m-b-3">
-        <mat-form-field subscriptSizing="dynamic">
-            <mat-label>Ordem</mat-label>
-            <mat-select [formControl]="sortMethod">
-                <mat-option *ngFor="let option of sortOptions" [value]="option.value"
-                    [disabled]="option.disabled">{{option.label}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button color="secondary" class="m-l-3" mat-button (click)="sortMethod.setValue(1)" *ngIf="clearSortEnabled">
-            <mat-icon fontIcon="sort_alt_off"></mat-icon>limpar
-        </button>
-    </div>
-
 </div>

@@ -4,18 +4,14 @@ import { Store } from '@ngrx/store';
 import { State } from 'app/+state/app.reducers';
 import { CollectionFiltersService } from 'app/modules/shared/services/collection-filters.service';
 import { Subscription } from 'rxjs';
-import {
-  CollectionFilterOptions,
-  CollectionSortOptions,
-} from '../../models/collection.models';
+import { CollectionFilterOptions } from '../../models/collection.models';
 
 @Component({
-  selector: 'collection-filters-bar',
-  templateUrl: './collection-filters-bar.component.html',
-  styleUrls: ['./collection-filters-bar.component.scss'],
+  selector: 'collection-filters',
+  templateUrl: './collection-filters.component.html',
+  styleUrls: ['./collection-filters.component.scss'],
 })
-export class CollectionFiltersBarComponent implements OnDestroy {
-  @Output() sorted = new EventEmitter<CollectionSortOptions>();
+export class CollectionFiltersComponent implements OnDestroy {
   @Output('company-filtered') filterByCompany = new EventEmitter<string[]>();
   @Output('filters-cleared') filtersCleared = new EventEmitter();
 
@@ -34,29 +30,6 @@ export class CollectionFiltersBarComponent implements OnDestroy {
     { label: 'Perfumista', value: CollectionFilterOptions.PERFUME },
   ];
 
-  public readonly sortOptions: {
-    label: string;
-    value: CollectionSortOptions;
-    disabled?: boolean;
-  }[] = [
-    { label: 'Empresa', value: CollectionSortOptions.COMPANY },
-    { label: 'Perfume', value: CollectionSortOptions.PERFUME },
-    { label: 'Preço', value: CollectionSortOptions.PRICE },
-    {
-      label: 'Nota Fragrantica',
-      value: CollectionSortOptions.FRAGRANTICA_RATING,
-    },
-    { label: 'Nota Usuário', value: CollectionSortOptions.USER_RATING },
-    {
-      label: 'Customizada',
-      value: CollectionSortOptions.CUSTOM,
-      disabled: true,
-    },
-  ];
-
-  public sortMethod: FormControl = new FormControl(
-    CollectionSortOptions.COMPANY
-  );
   public companyFilter: FormControl = new FormControl([]);
 
   public companyOptions: string[] = [];
@@ -67,7 +40,6 @@ export class CollectionFiltersBarComponent implements OnDestroy {
   ) {
     this.getCompanyFilterOptions();
     this.setupFormListeners();
-    this.sortMethod.setValue(this.collectionFiltersService.sortMethod);
     this.companyFilter.setValue(this.collectionFiltersService.currentFilters);
   }
 
@@ -75,21 +47,7 @@ export class CollectionFiltersBarComponent implements OnDestroy {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
-  public setSortMethod(method: CollectionSortOptions) {
-    this.sortMethod.setValue(method);
-  }
-
   private setupFormListeners() {
-    this.subs.push(
-      this.sortMethod.valueChanges.subscribe((val) => {
-        if (!val) return;
-        this.sorted.emit(val);
-        this.collectionFiltersService.sortMethod = val;
-        this.clearSortEnabled =
-          val === CollectionSortOptions.CUSTOM ? true : false;
-      })
-    );
-
     this.subs.push(
       this.companyFilter.valueChanges.subscribe((val) => {
         if (val.length) {

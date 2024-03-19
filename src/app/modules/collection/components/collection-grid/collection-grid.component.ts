@@ -11,9 +11,10 @@ import {
 import { SearchResult } from 'app/modules/shared/components/perfume-search/models/perfume-search.models';
 import { CollectionFiltersService } from 'app/modules/shared/services/collection-filters.service';
 import { NotificationService } from 'app/modules/shared/services/notification.service';
-import { Subscription, finalize, map } from 'rxjs';
+import { Subscription, finalize, first, map } from 'rxjs';
 import { CollectionService } from '../../services/collection.service';
-import { CollectionFiltersBarComponent } from '../collection-filters-bar/collection-filters-bar.component';
+import { CollectionFiltersComponent } from '../collection-filters/collection-filters.component';
+import { CollectionSortComponent } from '../collection-sort/collection-sort.component';
 @Component({
   selector: 'collection-grid',
   templateUrl: './collection-grid.component.html',
@@ -41,17 +42,35 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
-  public openFilters() {
-    const ref = this.bottomSheet.open(CollectionFiltersBarComponent);
+  public openSorting() {
+    const ref = this.bottomSheet.open(CollectionSortComponent);
 
     //todo maybe switch to subscribing to service observables instead
     const subs = [
       ref.instance.sorted.subscribe((data) => this.handleSorting(data)),
+    ];
+
+    ref
+      .afterDismissed()
+      .pipe(first())
+      .subscribe(() => subs.forEach((sub) => sub.unsubscribe()));
+  }
+  public openFilters() {
+    const ref = this.bottomSheet.open(CollectionFiltersComponent);
+
+    //todo maybe switch to subscribing to service observables instead
+    const subs = [
       ref.instance.filtersCleared.subscribe(() => this.clearFilters()),
       ref.instance.filterByCompany.subscribe((data) =>
         this.handleCompanyFiltering(data)
       ),
     ];
+
+    ref
+      .afterDismissed()
+      .pipe(first())
+      .subscribe(() => subs.forEach((sub) => sub.unsubscribe()));
+  }
 
     this.subs.push(
       ref
