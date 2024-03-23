@@ -10,7 +10,7 @@
             <h4 class="result__title m-r-1">{{ perfume.naslov }}
                 <small *ngIf="perfume.collection" class="result__subtitle"> ({{
                     perfume.collection
-                    }})</small>
+                    }} | {{perfume.dizajner}})</small>
             </h4>
         </div>
         <perfume-star-rating [rating]="perfume.rating_rounded">
