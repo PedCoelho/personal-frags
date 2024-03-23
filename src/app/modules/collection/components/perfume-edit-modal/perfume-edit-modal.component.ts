@@ -1,8 +1,9 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { State } from 'app/+state/app.reducers';
 import {
   UserPerfume,
   ownershipStatusOptions,
@@ -16,10 +17,10 @@ import {
 export class PerfumeEditModalComponent {
   @Output() confirmed = new EventEmitter<Partial<UserPerfume>>();
 
+  public tagOptions = this.store.select('collection', 'tags');
+
   public perfumeForm = this.formBuilder.nonNullable.group({
-    user_tags: new FormArray<
-      FormGroup<{ label: FormControl<string>; color: FormControl<string> }>
-    >([]),
+    user_tags: [],
     user_owned: [],
     user_price: [],
     user_rating: [],
@@ -30,67 +31,13 @@ export class PerfumeEditModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public perfume: UserPerfume,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<State>
   ) {
     //@ts-ignore
     this.perfumeForm.patchValue(perfume);
-    perfume.user_tags?.forEach((tag) =>
-      (this.perfumeForm.controls['user_tags'] as FormArray).push(
-        new FormGroup({
-          label: new FormControl(tag.label),
-          color: new FormControl(tag.color),
-        })
-      )
-    );
     this.perfumeForm.markAsPristine();
-  }
 
-  public pickTagColor(val: string, i: number) {
-    const control =
-      this.perfumeForm.controls['user_tags'].at(i).controls['color'];
-    control.setValue(val);
-    this.perfumeForm.markAsDirty();
-  }
-
-  addTag(event: MatChipInputEvent): void {
-    console.log(event.value);
-    const value = (event.value || '').trim().toLowerCase();
-
-    // Add our perfume
-    if (value) {
-      (this.perfumeForm.controls['user_tags'] as FormArray).push(
-        new FormGroup({
-          label: new FormControl(value),
-          color: new FormControl(''),
-        })
-      );
-      this.perfumeForm.markAsDirty();
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  removeTag(index: number): void {
-    this.perfumeForm.controls['user_tags'].removeAt(index);
-    this.perfumeForm.markAsDirty();
-  }
-
-  editTag(index: number, event: MatChipEditedEvent) {
-    const value = event.value.trim().toLowerCase();
-
-    console.log(index);
-
-    // Remove tag if it no longer has a name
-    if (!value) {
-      return this.removeTag(index);
-    }
-
-    // Edit existing tag
-    (this.perfumeForm.controls['user_tags'] as FormArray)
-      .at(index)
-      .patchValue({ label: value });
-
-    this.perfumeForm.markAsDirty();
+    this.tagOptions.subscribe((tags) => console.log(tags));
   }
 }

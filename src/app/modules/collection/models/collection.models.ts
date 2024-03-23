@@ -25,7 +25,7 @@ export interface UserPerfume {
   loading?: boolean;
   showNotes?: boolean;
   showAccords?: boolean;
-  user_tags?: PerfumeTag[];
+  user_tags?: PerfumeTag['id'][];
   user_rating?: number;
   user_owned?: OwnershipStatus;
   user_price?: number;
@@ -51,6 +51,7 @@ export const ownershipStatusOptions: {
 export interface PerfumeTag {
   label: string;
   color?: string;
+  id?: string;
 }
 
 export interface PerfumeNote {

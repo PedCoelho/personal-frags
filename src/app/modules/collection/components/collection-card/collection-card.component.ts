@@ -3,15 +3,16 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
   Output,
   TemplateRef,
   TrackByFunction,
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { State } from 'app/+state/app.reducers';
 import { NotificationService } from 'app/modules/shared/services/notification.service';
-import { Subscription, finalize } from 'rxjs';
+import { Observable, Subscription, finalize, map } from 'rxjs';
 import {
   PerfumeAccord,
   PerfumeNote,
@@ -20,38 +21,43 @@ import {
 } from '../../models/collection.models';
 import { CollectionService } from '../../services/collection.service';
 import { PerfumeEditModalComponent } from '../perfume-edit-modal/perfume-edit-modal.component';
-import { ReversePipe } from './../../../shared/pipes/reverse.pipe';
 
 @Component({
   selector: 'collection-card',
   templateUrl: './collection-card.component.html',
   styleUrls: ['./collection-card.component.scss'],
 })
-export class CollectionCardComponent implements OnInit, OnDestroy {
+export class CollectionCardComponent implements OnDestroy {
   @ViewChild('deleteWarningDialog', { read: TemplateRef })
   deleteWarningDialog!: TemplateRef<any>;
 
-  @Input() perfume!: UserPerfume;
+  @Input()
+  set perfume(perfume: UserPerfume) {
+    this._perfume = perfume;
+    this.tags = this.getTags(perfume.user_tags as string[]);
+    this.perfumeNotes = this.mapPerfumeNotes(perfume);
+  }
+  get perfume() {
+    return this._perfume;
+  }
   @Output('remove') removeActionClicked = new EventEmitter<UserPerfume>();
   @Output('updated') updated = new EventEmitter();
 
   public perfumeNotes: Array<[string, PerfumeNote[]]> = [];
+  public tags!: Observable<PerfumeTag[]>;
 
+  private _perfume!: UserPerfume;
   private subs: Subscription[] = [];
 
   constructor(
     private dialog: MatDialog,
     private collectionService: CollectionService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private store: Store<State>
   ) {}
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
-  }
-
-  ngOnInit(): void {
-    //map perfume notes to usable format
-    this.mapPerfumeNotes();
   }
 
   openDialog(): void {
@@ -99,16 +105,18 @@ export class CollectionCardComponent implements OnInit, OnDestroy {
     this.subs.push(sub);
   }
 
-  public trackTag: TrackByFunction<PerfumeTag> = (index, item) => item.label;
+  public trackTag: TrackByFunction<PerfumeTag> = (index, item) => item.id;
   public trackChord: TrackByFunction<PerfumeAccord> = (index, item) =>
     item.name;
   public trackNote: TrackByFunction<PerfumeNote> = (index, item) => item.link;
 
-  private mapPerfumeNotes() {
-    new ReversePipe()
-      .transform(Object.entries(this.perfume.notes))
-      .forEach(([category, notes]: [string, PerfumeNote[]]) => {
-        this.perfumeNotes.push([category, notes]);
-      });
+  private mapPerfumeNotes(perfume: UserPerfume) {
+    return Object.entries(perfume.notes).reverse();
+  }
+
+  private getTags(user_tags: string[]): Observable<PerfumeTag[]> {
+    return this.store
+      .select('collection', 'tags')
+      .pipe(map((tags) => tags.filter((tag) => user_tags?.includes(tag.id!))));
   }
 }

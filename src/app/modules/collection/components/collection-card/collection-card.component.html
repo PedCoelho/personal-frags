@@ -16,9 +16,9 @@
             </section>
         </mat-card-header>
         <mat-divider></mat-divider>
-        <section class="p-y-2 p-x-3" *ngIf="perfume.user_tags?.length">
+        <section class="p-y-2 p-x-3" *ngIf="(tags|async)?.length">
             <mat-chip-set>
-                <mat-chip *ngFor="let tag of perfume.user_tags;trackBy:trackTag"
+                <mat-chip *ngFor="let tag of tags|async;trackBy:trackTag"
                     [ngStyle]="{background:tag.color}">{{tag.label}}</mat-chip>
             </mat-chip-set>
         </section>

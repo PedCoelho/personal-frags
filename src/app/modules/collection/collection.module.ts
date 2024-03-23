@@ -12,6 +12,7 @@ import { CollectionGridComponent } from './components/collection-grid/collection
 import { PerfumeEditModalComponent } from './components/perfume-edit-modal/perfume-edit-modal.component';
 import { CollectionComponent } from './container/collection.component';
 import { CollectionSortComponent } from './components/collection-sort/collection-sort.component';
+import { CollectionTagsComponent } from './components/collection-tags/collection-tags.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { CollectionSortComponent } from './components/collection-sort/collection
     CollectionFiltersComponent,
     CollectionSortComponent,
     PerfumeEditModalComponent,
+    CollectionTagsComponent,
   ],
   exports: [CollectionComponent],
 })

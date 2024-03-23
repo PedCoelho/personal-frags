@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { UserPerfume } from 'app/modules/collection/models/collection.models';
+import { Store } from '@ngrx/store';
+import { removeTag, updateTags } from 'app/+state/app.actions';
+import {
+  PerfumeTag,
+  UserPerfume,
+} from 'app/modules/collection/models/collection.models';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SearchResult } from '../../shared/components/perfume-search/models/perfume-search.models';
 import { HttpService } from '../../shared/services/http.service';
 
@@ -9,12 +14,30 @@ import { HttpService } from '../../shared/services/http.service';
   providedIn: 'root',
 })
 export class CollectionService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private store: Store) {}
 
   public getAll(): Observable<UserPerfume[]> {
     return this.http.get<UserPerfume[]>(
       `${environment.apiBaseUrl}/frag/perfume/collection`
     );
+  }
+
+  public getTags(): Observable<PerfumeTag[]> {
+    return this.http
+      .get<PerfumeTag[]>(`${environment.apiBaseUrl}/frag/perfume/tags`)
+      .pipe(tap((tags) => this.store.dispatch(updateTags({ tags }))));
+  }
+
+  public setTags(tags: PerfumeTag[]): Observable<void> {
+    return this.http
+      .put<void>(`${environment.apiBaseUrl}/frag/perfume/tags`, tags)
+      .pipe(tap(() => this.store.dispatch(updateTags({ tags }))));
+  }
+
+  public deleteTag(id: string): Observable<void> {
+    return this.http
+      .delete<void>(`${environment.apiBaseUrl}/frag/perfume/tags/${id}`)
+      .pipe(tap(() => this.store.dispatch(removeTag({ id }))));
   }
 
   public addPerfume(perfume: SearchResult): Observable<any> {

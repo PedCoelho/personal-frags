@@ -1,7 +1,7 @@
 <div class="collection__actions-holder">
     <button class="m-b-2" mat-button (click)="openSorting()"><mat-icon fontIcon="sort"></mat-icon>Ordem</button>
     <button class="m-b-2" mat-button (click)="openFilters()"><mat-icon fontIcon="filter_alt"></mat-icon>Filtros</button>
-    <!-- <button class="m-b-2" mat-button (click)="openTags()"><mat-icon fontIcon="tags"></mat-icon>Tags</button> -->
+    <button class="m-b-2" mat-button (click)="openTags()"><mat-icon fontIcon="tags"></mat-icon>Tags</button>
 </div>
 <div class="collection__grid-container" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let perfume of collection; trackBy: trackPerfumeBy">

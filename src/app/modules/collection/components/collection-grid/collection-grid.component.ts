@@ -15,6 +15,7 @@ import { Subscription, finalize, first, map } from 'rxjs';
 import { CollectionService } from '../../services/collection.service';
 import { CollectionFiltersComponent } from '../collection-filters/collection-filters.component';
 import { CollectionSortComponent } from '../collection-sort/collection-sort.component';
+import { CollectionTagsComponent } from '../collection-tags/collection-tags.component';
 @Component({
   selector: 'collection-grid',
   templateUrl: './collection-grid.component.html',
@@ -74,7 +75,19 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
 
   public openTags() {
-    throw new Error('Function not implemented.');
+    const ref = this.bottomSheet.open(CollectionTagsComponent);
+
+    //todo maybe switch to subscribing to service observables instead
+    ref.instance.getTags();
+
+    ref.instance.confirmed.subscribe(() => {
+      ref.dismiss();
+    });
+
+    // ref
+    //   .afterDismissed()
+    //   .pipe(first())
+    //   .subscribe(() => subs.forEach((sub) => sub.unsubscribe()));
   }
 
   public shrinkCards() {
@@ -139,10 +152,6 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
     this.subs.push(sub);
   }
 
-  public getUserTags(): void {
-    // this.subs.push(this.collectionService.getTags().subscribe(console.log));
-  }
-
   public getCollection(): void {
     this.subs.push(
       this.collectionService
@@ -156,6 +165,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
           );
         })
     );
+  }
+
+  public getUserTags(): void {
+    this.subs.push(this.collectionService.getTags().subscribe());
   }
 
   public showCollapseAll() {
