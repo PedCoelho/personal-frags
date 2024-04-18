@@ -1,0 +1,19 @@
+<mat-spinner *ngIf="loading" />
+<ng-container *ngTemplateOutlet="overviewTemplate;context:{$implicit: overview$ | async}" />
+
+<ng-template #overviewTemplate let-overview>
+    <div *ngIf="overview">
+        <h1>Moods</h1>
+        <ng-container *ngFor="let topic of overview.topics">
+            <h2>{{topic.mood}}</h2>
+            <p>{{topic.description}}</p>
+        </ng-container>
+        <h1>Related Characters</h1>
+        <ng-container *ngFor="let character of overview.characters">
+            <img class="ai-overview__character-image" src="{{character.images[0]}}" />
+            <h1>{{character.characterName}}</h1>
+            <p>{{character.characterDescription}}</p>
+        </ng-container>
+
+    </div>
+</ng-template>

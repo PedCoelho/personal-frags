@@ -1,0 +1,11 @@
+:host {
+  margin: var(--spacing-md);
+
+  .ai-overview {
+    &__character-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }
+}

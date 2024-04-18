@@ -106,8 +106,9 @@
             </a>
         </div>
         <div>
-            <button mat-mini-fab title="Editar" matTooltip="Editar" class="m-r-1" color="secondary"
-                (click)="edit(perfume)">
+            <ai-overview-button [perfume]="perfume" />
+            <button [disabled]="perfume.loading" mat-mini-fab title="Editar" matTooltip="Editar" class="m-r-1"
+                color="secondary" (click)="edit(perfume)">
                 <mat-icon fontIcon="edit" />
             </button>
             <button [disabled]="perfume.loading" mat-mini-fab title="Remover" matTooltip="Remover" color="secondary"
